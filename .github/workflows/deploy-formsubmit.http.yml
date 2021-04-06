@@ -1,4 +1,4 @@
-name: Deploy formsubmit-http
+name: Deploy processFormSubmit
 
 on:
   push:
@@ -9,7 +9,6 @@ env:
 
 jobs:
   deploy:
-    name: Deploy formSubmit
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,7 +25,7 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud functions deploy formSubmit-http --trigger-http \
+          gcloud functions deploy processFormSubmit --trigger-http \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB
