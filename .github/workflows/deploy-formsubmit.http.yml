@@ -32,4 +32,3 @@ jobs:
           entry_point: onSubmit
           memory_mb: 128MB
           region: us-east4
-          event_trigger_type: trigger-http
