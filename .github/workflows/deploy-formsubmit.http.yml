@@ -27,6 +27,6 @@ jobs:
       - name: Deploy
         run: |
           gcloud functions deploy formSubmit-http --trigger-http
-          --region=us-east4
-          --runtime=nodejs12
-          --memory=128MB
+            --region=us-east4
+            --runtime=nodejs12
+            --memory=128MB
