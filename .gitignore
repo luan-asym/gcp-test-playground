@@ -17,3 +17,6 @@ Thumbs.db
 
 # VSCode files
 .vscode
+
+# GCP secrets
+creds.json
