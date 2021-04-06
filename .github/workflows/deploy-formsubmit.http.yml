@@ -25,10 +25,8 @@ jobs:
           export_default_credentials: true
 
       - name: Deploy
-        uses: google-github-actions/deploy-cloud-functions@main
-        with:
-          name: formsubmit-http
-          runtime: nodejs12
-          entry_point: onSubmit
-          memory_mb: 128MB
-          region: us-east4
+        run: |
+          gcloud functions deploy formSubmit-http --trigger-http
+          --region=us-east4
+          --runtime=nodejs12
+          --memory=128MB
