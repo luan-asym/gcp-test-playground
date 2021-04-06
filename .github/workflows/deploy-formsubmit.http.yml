@@ -17,14 +17,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - id: Setup gcloud
+      - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@master
         with:
           project_id: ${{ secrets.PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - id: Deploy
+      - name: Deploy
         uses: google-github-actions/deploy-cloud-functions@main
         with:
           name: formsubmit-http
