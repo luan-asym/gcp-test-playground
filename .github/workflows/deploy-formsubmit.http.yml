@@ -1,0 +1,35 @@
+name: Deploy formsubmit-http
+
+on:
+  push:
+
+env:
+  GITHUB_SHA: ${{ github.sha }}
+  GITHUB_REF: ${{ github.ref }}
+
+jobs:
+  deploy:
+    name: Deploy formSubmit
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: formsubmit-http
+
+    steps:
+      - uses: actions/checkout@v2
+      - id: Setup gcloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - id: Deploy
+        uses: google-github-actions/deploy-cloud-functions@main
+        with:
+          name: formsubmit-http
+          runtime: nodejs12
+          entry_point: onSubmit
+          memory_mb: 128MB
+          region: us-east4
+          event_trigger_type: trigger-http
