@@ -16,4 +16,4 @@ As more secrets are added to the repository, they should be added to a list here
 | name       | instructions       |
 | ---------- | ------------------ |
 | PROJECT_ID | contact maintainer |
-| PROJECT_ID | contact maintainer |
+| GCP_SA_KEY | contact maintainer |
