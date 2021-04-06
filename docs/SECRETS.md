@@ -6,12 +6,12 @@
 
 As more secrets are added to the repository, they should be added to a list here
 
-| name        | maintainer | description                   |
-| ----------- | ---------- | ----------------------------- |
-| TEST_SECRET | YOU        | Use inside automation scripts |
+| name       | maintainer | description           |
+| ---------- | ---------- | --------------------- |
+| PROJECT_ID | luan-asym  | The project ID of GCP |
 
 ## Attaining Secrets
 
-| name        | instructions |
-| ----------- | ------------ |
-| TEST_SECRET | It is "test" |
+| name       | instructions       |
+| ---------- | ------------------ |
+| PROJECT_ID | contact maintainer |
