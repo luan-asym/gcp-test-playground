@@ -31,7 +31,7 @@ exports.createBucket = (req, res) => {
   }
 
   create().catch(console.error);
-  createNotification.catch(console.error);
+  createNotification().catch(console.error);
 
   res.status(200).send(`${bucketName} created and setup`);
 };
