@@ -10,11 +10,6 @@ Please delete options that are not relevant.
 - [ ] Bug fix
 - [ ] This change requires a documentation update
 
-## Checklist
-
-- [ ] The tests are passing
-- [ ] Linter/Prettier were ran
-
 ## Changelog
 
 - _added_
