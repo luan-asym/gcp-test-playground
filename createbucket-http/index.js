@@ -9,7 +9,7 @@ const { Storage } = require('@google-cloud/storage');
 exports.createBucket = async (req, res) => {
   const LOCATION = 'US-EAST4';
   const STORAGE_CLASS = 'STANDARD';
-  const TOPIC = 'bucket-created';
+  const TOPIC = 'bucket-changed';
 
   const bucketName = req.body.bucketName;
 
