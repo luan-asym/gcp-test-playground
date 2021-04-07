@@ -9,11 +9,13 @@ const { Storage } = require('@google-cloud/storage');
 exports.createBucket = (req, res) => {
   const LOCATION = 'US-EAST4';
   const STORAGE_CLASS = 'STANDARD';
+  const TOPIC = 'bucket-created';
 
   const bucketName = req.body.bucketName;
 
   const storage = new Storage();
 
+  // creates bucket
   async function create() {
     await storage.createBucket(bucketName, {
       location: LOCATION,
@@ -22,7 +24,14 @@ exports.createBucket = (req, res) => {
     console.log(`Bucket ${bucketName} created!`);
   }
 
-  create().catch(console.error);
+  // creates notification
+  async function createNotification() {
+    await storage.bucket(bucketName).createNotification(TOPIC);
+    console.log(`Bucket ${bucketName} registered for ${TOPIC} topic!`);
+  }
 
-  res.status(200).send(`${bucketName} created!`);
+  create().catch(console.error);
+  createNotification.catch(console.error);
+
+  res.status(200).send(`${bucketName} created and setup`);
 };
