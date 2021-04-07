@@ -22,16 +22,13 @@ exports.createBucket = (req, res) => {
       storageClass: STORAGE_CLASS,
     });
     console.log(`Bucket ${bucketName} created!`);
-  }
 
-  // creates notification
-  async function createNotification() {
+    // creates notification
     await storage.bucket(bucketName).createNotification(TOPIC);
     console.log(`Bucket ${bucketName} registered for ${TOPIC} topic!`);
   }
 
   create().catch(console.error);
-  createNotification().catch(console.error);
 
   res.status(200).send(`${bucketName} created and setup`);
 };
