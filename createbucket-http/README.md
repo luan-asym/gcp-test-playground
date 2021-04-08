@@ -10,4 +10,8 @@
 
 ## Additional Notes
 
-This function requires a preexisiting Pub/Sub topic `bucket-changed` in order to work properly
+- This function requires a preexisiting Pub/Sub topic `bucket-changed` in order to work properly
+
+## References
+
+- https://cloud.google.com/storage/docs/reporting-changes
