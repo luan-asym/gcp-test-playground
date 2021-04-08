@@ -1,9 +1,7 @@
-name: Deploy createBucket
+name: Deploy onBucketChange
 
 on:
   push:
-    branches:
-      - master
 
 env:
   GITHUB_SHA: ${{ github.sha }}
@@ -14,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: createbucket-http
+        working-directory: onbucketchange-pubsub
 
     steps:
       - uses: actions/checkout@v2
@@ -27,8 +25,8 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud functions deploy createBucket \
-            --trigger-http \
+          gcloud functions deploy onBucketChange \
+            --trigger-topic bucket-changed \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB
