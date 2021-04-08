@@ -1,7 +1,7 @@
 name: Deploy createBucket
 
 on:
-  push:
+  push: master
 
 env:
   GITHUB_SHA: ${{ github.sha }}
