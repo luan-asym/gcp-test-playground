@@ -25,7 +25,8 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud functions deploy createBucket --trigger-http \
+          gcloud functions deploy createBucket \
+            --trigger-http \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB
