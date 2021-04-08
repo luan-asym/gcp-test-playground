@@ -1,4 +1,4 @@
-name: Deploy createBucket
+name: Deploy onBucketChange
 
 on:
   push:
