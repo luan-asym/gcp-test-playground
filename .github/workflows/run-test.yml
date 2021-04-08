@@ -1,7 +1,7 @@
 name: Test Script
 
 on:
-  push:
+  workflow_dispatch:
 
 env:
   GITHUB_SHA: ${{ github.sha }}
