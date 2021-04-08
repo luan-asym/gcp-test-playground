@@ -26,7 +26,7 @@ jobs:
       - name: Deploy
         run: |
           gcloud functions deploy onBucketChange \
-            --trigger-topic bucket-changed
+            --trigger-topic bucket-changed \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB
