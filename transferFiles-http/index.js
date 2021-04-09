@@ -12,7 +12,7 @@ exports.transferFiles = async (req, res) => {
   const srcBucket = req.body.srcBucket || 'gcp-bucket-deposit';
   const destBucket = req.body.destBucket || 'gcp-bucket-destination';
 
-  const [files] = await storage.bucket(srcBucket).getFiles();
+  const files = await storage.bucket(srcBucket).getFiles();
 
   files.forEach((file) => {
     console.log(file.name);
