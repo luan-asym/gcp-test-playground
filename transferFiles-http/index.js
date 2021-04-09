@@ -13,7 +13,13 @@ exports.transferFiles = async (req, res) => {
   const destBucket = req.body.destBucket || 'gcp-bucket-destination';
   const deleteSrc = req.body.deleteSrc || false;
 
-  const [files] = req.body.fileList || (await storage.bucket(srcBucket).getFiles());
+  const [files] = req.body.fileList
+    ? req.body.fileList.map((file) => {
+        return {
+          name: file,
+        };
+      })
+    : await storage.bucket(srcBucket).getFiles();
 
   files.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
@@ -26,7 +32,7 @@ exports.transferFiles = async (req, res) => {
     console.log(`${file.name} copied!`);
     if (deleteSrc) {
       await storage.bucket(srcBucket).file(file.name).delete();
-      console.log(`${file.name} deleted!`);
+      console.log(`${file} deleted!`);
     }
   });
 
