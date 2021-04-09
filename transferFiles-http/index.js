@@ -15,7 +15,7 @@ exports.transferFiles = async (req, res) => {
   const [files] = await storage.bucket(srcBucket).getFiles();
 
   files.forEach(async (file) => {
-    await storage.bucket(srcBucket).file(file).copy(storage.bucket.file(file));
+    await storage.bucket(srcBucket).file(file).copy(storage.bucket(destBucket).file(file));
   });
 
   res.status(200).send(`${files.length} files moved from ${srcBucket} to ${destBucket}`);
