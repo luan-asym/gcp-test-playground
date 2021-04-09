@@ -14,4 +14,4 @@
 | ------------ | ------- | ------------------------ | ---------------------------------------- |
 | `srcBucket`  | string  | `gcp-bucket-deposit`     | The source bucket                        |
 | `destBucket` | string  | `gcp-bucket-destination` | The destination bucket                   |
-| `replace`    | boolean | false                    | Deletes file from `srcBucket` after copy |
+| `deleteSrc`  | boolean | false                    | Deletes file from `srcBucket` after copy |
