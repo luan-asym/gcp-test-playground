@@ -11,7 +11,7 @@ exports.transferFiles = async (req, res) => {
 
   const srcBucket = req.body.srcBucket || 'gcp-bucket-deposit';
   const destBucket = req.body.destBucket || 'gcp-bucket-destination';
-  const replace = req.body.replace || false;
+  const deleteSrc = req.body.deleteSrc || false;
 
   const files = await storage.bucket(srcBucket).getFiles();
 
@@ -21,9 +21,9 @@ exports.transferFiles = async (req, res) => {
       .file(file.name)
       .copy(storage.bucket(destBucket).file(file.name));
 
-    if (replace) {
-      await storage.bucket(srcBucket).file(file.name).delete();
-    }
+    // if (deleteSrc) {
+    //   await storage.bucket(srcBucket).file(file.name).delete();
+    // }
   });
 
   res.status(200).send(`${files.length} file(s) moved from ${srcBucket} to ${destBucket}`);
