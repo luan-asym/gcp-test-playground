@@ -14,8 +14,17 @@ exports.transferFiles = async (req, res) => {
 
   const [files] = await storage.bucket(srcBucket).getFiles();
 
+  files.forEach((file) => {
+    console.log(file);
+  });
+
   files.forEach(async (file) => {
-    await storage.bucket(srcBucket).file(file).copy(storage.bucket(destBucket).file(file));
+    await storage
+      .bucket(srcBucket)
+      .file(file.name)
+      .copy(storage.bucket(destBucket).file(file.name));
+
+    console.log(`gs://${srcBucket}/${file} copied to gs://${destBucket}/${file}`);
   });
 
   res.status(200).send(`${files.length} files moved from ${srcBucket} to ${destBucket}`);
