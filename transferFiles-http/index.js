@@ -16,11 +16,14 @@ exports.transferFiles = async (req, res) => {
   const files = await storage.bucket(srcBucket).getFiles();
 
   files.forEach(async (file) => {
+    console.log(`Processing ${file.name}...`);
+
     await storage
       .bucket(srcBucket)
       .file(file.name)
       .copy(storage.bucket(destBucket).file(file.name));
 
+    console.log(`${file.name} copied!`);
     // if (deleteSrc) {
     //   await storage.bucket(srcBucket).file(file.name).delete();
     // }
