@@ -21,9 +21,9 @@ exports.transferFiles = async (req, res) => {
       .file(file.name)
       .copy(storage.bucket(destBucket).file(file.name));
 
-    if (replace) {
-      await storage.bucket(srcBucket).file(file.name).delete();
-    }
+    // if (replace) {
+    //   await storage.bucket(srcBucket).file(file.name).delete();
+    // }
   });
 
   res.status(200).send(`${files.length} files moved from ${srcBucket} to ${destBucket}`);
