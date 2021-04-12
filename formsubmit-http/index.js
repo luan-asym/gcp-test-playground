@@ -20,7 +20,11 @@ exports.processFormSubmit = (req, res) => {
 
   console.info(createBucket);
   console.info(bucketName);
-  console.info(others);
+
+  const [Q1, Q2, Q3] = others;
+  console.info(Q1);
+  console.info(Q2);
+  console.info(Q3);
 
   res.send(message);
 };
