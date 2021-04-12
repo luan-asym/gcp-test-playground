@@ -2,6 +2,8 @@ name: Deploy onBucketChange
 
 on:
   push:
+    branches:
+      - master
 
 env:
   GITHUB_SHA: ${{ github.sha }}
