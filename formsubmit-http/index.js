@@ -9,7 +9,7 @@ exports.processFormSubmit = (req, res) => {
 
   const timestamp = message.timestamp;
   const email = message.email;
-  const responses = message.responses;
+  const responses = JSON.parse(message.responses);
 
   console.info(`Timestamp: ${timestamp}`);
   console.info(`    Email: ${email}`);
