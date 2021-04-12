@@ -5,9 +5,15 @@
  * @param {!express:Response} res HTTP response context.
  */
 exports.processFormSubmit = (req, res) => {
-  let message = req.body;
+  const message = req.body;
 
-  console.info(message);
+  const timestamp = message.timestamp;
+  const email = message.email;
+  const responses = message.responses;
+
+  console.info(`Timestamp: ${timestamp}`);
+  console.info(`    Email: ${email}`);
+  console.info(responses);
 
   res.send(message);
 };
