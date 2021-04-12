@@ -13,7 +13,14 @@ exports.processFormSubmit = (req, res) => {
 
   console.info(`Timestamp: ${timestamp}`);
   console.info(`    Email: ${email}`);
-  console.info(responses);
+
+  // [0] Create Bucket?
+  // [1] Bucket Name
+  const [createBucket, bucketName, ...others] = responses;
+
+  console.info(createBucket);
+  console.info(bucketName);
+  console.info(others);
 
   res.send(message);
 };
