@@ -1,5 +1,7 @@
 const axios = require('axios').default;
-const CREATE_BUCKET_URL = 'https://us-east4-gcp-testing-308520.cloudfunctions.net/createBucket';
+const { GoogleAuth } = require('google-auth-library');
+
+const URL = 'https://us-east4-gcp-testing-308520.cloudfunctions.net/createBucket';
 
 /**
  * Processes Google Form Submission
@@ -7,7 +9,7 @@ const CREATE_BUCKET_URL = 'https://us-east4-gcp-testing-308520.cloudfunctions.ne
  * @param {!express:Request} req HTTP request context.
  * @param {!express:Response} res HTTP response context.
  */
-exports.processFormSubmit = (req, res) => {
+exports.processFormSubmit = async (req, res) => {
   const message = req.body;
 
   const timestamp = message.timestamp;
@@ -31,21 +33,39 @@ exports.processFormSubmit = (req, res) => {
   console.info(Q3);
 
   if (createBucket) {
-    axios
-      .post(CREATE_BUCKET_URL, {
-        bucketName: bucketName,
-      })
-      .then(
-        (res) => {
-          console.log(res);
+    const TOKEN = await getAuthToken();
 
-          res.send(`Bucket creation successful!`);
-        },
-        (err) => {
-          console.error(err);
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    };
 
-          res.status(400).send(`Bucket creation failed: ${err}`);
-        }
-      );
+    const payload = {
+      bucketName: bucketName,
+    };
+
+    axios.post(URL, payload, headers).then(
+      (res) => {
+        console.log(res);
+
+        res.send(`Bucket creation successful!`);
+      },
+      (err) => {
+        console.error(err);
+
+        res.status(400).send(`Bucket creation failed: ${err}`);
+      }
+    );
   }
+};
+
+const getAuthToken = async () => {
+  const auth = new GoogleAuth();
+  const client = await auth.getIdTokenClient(URL);
+  const res = await client.request({ url });
+
+  console.info(`TOKEN: ${res.data}`);
+
+  return res.data;
 };
