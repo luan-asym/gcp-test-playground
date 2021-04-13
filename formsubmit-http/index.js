@@ -63,7 +63,7 @@ exports.processFormSubmit = async (req, res) => {
 const getAuthToken = async () => {
   const auth = new GoogleAuth();
   const client = await auth.getIdTokenClient(URL);
-  const res = await client.request({ url });
+  const res = await client.request({ URL });
 
   console.info(`TOKEN: ${res.data}`);
 
