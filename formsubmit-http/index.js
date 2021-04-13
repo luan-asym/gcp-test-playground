@@ -1,7 +1,8 @@
 const axios = require('axios').default;
 const { GoogleAuth } = require('google-auth-library');
+const { URL } = require('url');
 
-const URL = 'https://us-east4-gcp-testing-308520.cloudfunctions.net/createBucket';
+const CREATE_BUCKET_URL = 'https://us-east4-gcp-testing-308520.cloudfunctions.net/createBucket';
 
 /**
  * Processes Google Form Submission
@@ -45,7 +46,7 @@ exports.processFormSubmit = async (req, res) => {
       bucketName: bucketName,
     };
 
-    axios.post(URL, payload, headers).then(
+    axios.post(CREATE_BUCKET_URL, payload, headers).then(
       (res) => {
         console.log(res);
 
@@ -62,9 +63,11 @@ exports.processFormSubmit = async (req, res) => {
 
 const getAuthToken = async () => {
   const auth = new GoogleAuth();
-  const client = await auth.getIdTokenClient(URL);
-  const res = await client.request({ URL });
+  const aud = new URL(CREATE_BUCKET_URL).origin;
+  const client = await auth.getIdTokenClient(aud);
+  const res = await client.request({ aud });
 
+  console.ingo(`AUD: ${aud}`);
   console.info(`TOKEN: ${res.data}`);
 
   return res.data;
