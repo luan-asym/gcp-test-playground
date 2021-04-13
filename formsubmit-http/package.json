@@ -1,0 +1,7 @@
+{
+  "name": "formsubmit-http",
+  "version": "0.0.1",
+  "dependencies": {
+    "axios": "^5.8.3"
+  }
+}
