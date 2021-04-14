@@ -34,9 +34,7 @@ exports.processFormSubmit = async (req, res) => {
   console.info(Q3);
 
   if (createBucket) {
-    const TOKEN = getAuthToken().catch((err) => {
-      console.error(err.message);
-    });
+    const TOKEN = await getAuthToken();
     console.info(`TOKEN: ${TOKEN}`);
 
     const headers = {
@@ -75,6 +73,8 @@ const getAuthToken = async () => {
   const res = await client.request({
     URL: CREATE_BUCKET_URL,
   });
+
+  console.info(`RES: ${res.data}`);
 
   return res.data;
 };
