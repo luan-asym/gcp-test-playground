@@ -2,7 +2,7 @@ const axios = require('axios').default;
 const { GoogleAuth } = require('google-auth-library');
 const { URL } = require('url');
 
-const CREATE_BUCKET_URL = 'https://us-east4-gcp-testing-308520.cloudfunctions.net/createBucket';
+const url = 'https://us-east4-gcp-testing-308520.cloudfunctions.net/createBucket';
 
 /**
  * Processes Google Form Submission
@@ -34,30 +34,11 @@ exports.processFormSubmit = async (req, res) => {
   console.info(Q3);
 
   if (createBucket) {
-    // const token = await Promise.resolve(getAuthToken()).catch((err) => {
-    //   console.error(err);
-    // });
-
-    const auth = new GoogleAuth();
-
-    const aud = new URL(CREATE_BUCKET_URL).origin;
-    console.info(`AUD: ${aud}`);
-
-    const client = await auth.getIdTokenClient(aud);
-
-    console.info(`CLIENT: ${client}`);
-
-    const res = await client
-      .request({
-        URL: CREATE_BUCKET_URL,
-      })
-      .catch((err) => {
+    const token = await Promise.resolve(
+      getAuthToken().catch((err) => {
         console.error(err);
-      });
-
-    console.info(`RES: ${res.data}`);
-
-    token = res.data;
+      })
+    );
 
     console.info(`TOKEN: ${token}`);
 
@@ -84,4 +65,21 @@ exports.processFormSubmit = async (req, res) => {
       }
     );
   }
+};
+
+const getAuthToken = async () => {
+  const auth = new GoogleAuth();
+
+  const aud = new URL(url).origin;
+  console.info(`AUD: ${aud}`);
+
+  const client = await auth.getIdTokenClient(aud);
+
+  console.info(`CLIENT: ${client}`);
+
+  const res = await client.request({ URL: url });
+
+  console.info(`RES: ${res.data}`);
+
+  return res.data;
 };
