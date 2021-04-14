@@ -47,9 +47,13 @@ exports.processFormSubmit = async (req, res) => {
 
     console.info(`CLIENT: ${client}`);
 
-    const res = await client.request({
-      url: CREATE_BUCKET_URL,
-    });
+    const res = await client
+      .request({
+        URL: CREATE_BUCKET_URL,
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     console.info(`RES: ${res.data}`);
 
