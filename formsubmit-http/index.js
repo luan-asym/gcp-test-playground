@@ -77,7 +77,7 @@ const getAuthToken = async () => {
 
   console.info(`CLIENT: ${client}`);
 
-  const res = await client.request({ URL: url });
+  const res = await client.request({ url });
 
   console.info(`RES: ${res.data}`);
 
