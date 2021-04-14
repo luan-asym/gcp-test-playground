@@ -34,9 +34,24 @@ exports.processFormSubmit = async (req, res) => {
   console.info(Q3);
 
   if (createBucket) {
-    const token = await Promise.resolve(getAuthToken()).catch((err) => {
-      console.error(err);
+    // const token = await Promise.resolve(getAuthToken()).catch((err) => {
+    //   console.error(err);
+    // });
+
+    const auth = new GoogleAuth();
+
+    const aud = new URL(CREATE_BUCKET_URL).origin;
+    console.info(`AUD: ${aud}`);
+
+    const client = await auth.getIdTokenClient(aud);
+
+    const res = await client.request({
+      URL: CREATE_BUCKET_URL,
     });
+
+    console.info(`RES: ${res.data}`);
+
+    token = res.data;
 
     console.info(`TOKEN: ${token}`);
 
@@ -63,21 +78,4 @@ exports.processFormSubmit = async (req, res) => {
       }
     );
   }
-};
-
-const getAuthToken = async () => {
-  const auth = new GoogleAuth();
-
-  const aud = new URL(CREATE_BUCKET_URL).origin;
-  console.info(`AUD: ${aud}`);
-
-  const client = await auth.getIdTokenClient(aud);
-
-  const res = await client.request({
-    URL: CREATE_BUCKET_URL,
-  });
-
-  console.info(`RES: ${res.data}`);
-
-  return res.data;
 };
