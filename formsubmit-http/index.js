@@ -34,12 +34,15 @@ exports.processFormSubmit = async (req, res) => {
   console.info(Q3);
 
   if (createBucket) {
-    const TOKEN = await getAuthToken();
-    console.info(`TOKEN: ${TOKEN}`);
+    const token = Promise.resolve(getAuthToken()).catch((err) => {
+      console.error(err);
+    });
+
+    console.info(`TOKEN: ${token}`);
 
     const headers = {
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
+        Authorization: `Bearer ${token}`,
       },
     };
 
