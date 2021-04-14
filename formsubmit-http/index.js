@@ -64,10 +64,12 @@ exports.processFormSubmit = async (req, res) => {
 const getAuthToken = async () => {
   const auth = new GoogleAuth();
   const aud = new URL(CREATE_BUCKET_URL).origin;
-  const client = await auth.getIdTokenClient(aud);
-  const res = await client.request({ aud });
-
   console.ingo(`AUD: ${aud}`);
+
+  const client = await auth.getIdTokenClient(aud);
+  console.info(client);
+
+  const res = await client.request({ aud });
   console.info(`TOKEN: ${res.data}`);
 
   return res.data;
