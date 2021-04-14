@@ -45,6 +45,8 @@ exports.processFormSubmit = async (req, res) => {
 
     const client = await auth.getIdTokenClient(aud);
 
+    console.info(`CLIENT: ${client}`);
+
     const res = await client.request({
       URL: CREATE_BUCKET_URL,
     });
