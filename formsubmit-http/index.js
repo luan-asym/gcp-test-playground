@@ -34,7 +34,7 @@ exports.processFormSubmit = async (req, res) => {
   console.info(Q3);
 
   if (createBucket) {
-    const token = Promise.resolve(getAuthToken()).catch((err) => {
+    const token = await Promise.resolve(getAuthToken()).catch((err) => {
       console.error(err);
     });
 
