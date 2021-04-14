@@ -35,6 +35,7 @@ exports.processFormSubmit = async (req, res) => {
 
   if (createBucket) {
     const TOKEN = await getAuthToken();
+    console.info(`TOKEN: ${TOKEN}`);
 
     const headers = {
       headers: {
@@ -62,15 +63,17 @@ exports.processFormSubmit = async (req, res) => {
 };
 
 const getAuthToken = async () => {
+  console.info('getAuthToken');
   const auth = new GoogleAuth();
+  console.info(`auth: ${auth}`);
+
   const aud = new URL(CREATE_BUCKET_URL).origin;
-  console.ingo(`AUD: ${aud}`);
+  console.info(`AUD: ${aud}`);
 
   const client = await auth.getIdTokenClient(aud);
   console.info(client);
 
-  const res = await client.request({ aud });
-  console.info(`TOKEN: ${res.data}`);
+  const res = await client.request({ CREATE_BUCKET_URL });
 
   return res.data;
 };
