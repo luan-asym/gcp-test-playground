@@ -1,7 +1,5 @@
 const { Storage } = require('@google-cloud/storage');
 
-const LOCATION = 'US-EAST4';
-const STORAGE_CLASS = 'STANDARD';
 const TOPIC = 'bucket-changed';
 
 /**
@@ -12,13 +10,15 @@ const TOPIC = 'bucket-changed';
  */
 exports.createBucket = async (req, res) => {
   const bucketName = req.body.bucketName;
+  const location = req.body.location || 'US-EAST4';
+  const storageClass = req.body.storageClass || 'STANDARD';
 
   const storage = new Storage();
 
   // creates bucket
   await storage.createBucket(bucketName, {
-    location: LOCATION,
-    storageClass: STORAGE_CLASS,
+    location: location,
+    storageClass: storageClass,
   });
   console.log(`Bucket ${bucketName} created!`);
 
