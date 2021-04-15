@@ -6,7 +6,7 @@ const { Storage } = require('@google-cloud/storage');
  * @param {!express:Request} req HTTP request context.
  * @param {!express:Response} res HTTP response context.
  */
-exports.createBucket = async (req, res) => {
+exports.bucketRequest = async (req, res) => {
   const LOCATION = 'US-EAST4';
   const STORAGE_CLASS = 'STANDARD';
   const TOPIC = 'bucket-changed';
