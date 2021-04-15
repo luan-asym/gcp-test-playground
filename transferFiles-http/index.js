@@ -14,14 +14,11 @@ exports.transferFiles = async (req, res) => {
   const deleteSrc = req.body.deleteSrc || false;
 
   const [files] = req.body.fileList
-    ? req.body.fileList.map((file) => {
-        return {
-          name: file,
-        };
-      })
+    ? req.body.fileList
     : await storage.bucket(srcBucket).getFiles();
 
-  console.info(files);
+  console.log(`files: ${files}`);
+  console.log(fileList);
 
   files.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
