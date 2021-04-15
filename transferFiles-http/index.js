@@ -18,7 +18,7 @@ exports.transferFiles = async (req, res) => {
     : await storage.bucket(srcBucket).getFiles();
 
   console.log(`files: ${files}`);
-  console.log(files);
+  console.log(req.body.fileList);
 
   files.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
