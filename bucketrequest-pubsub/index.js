@@ -1,17 +1,19 @@
 const { Storage } = require('@google-cloud/storage');
 
-/**
- * Creates Google Storage Bucket
- *
- * @param {!express:Request} req HTTP request context.
- * @param {!express:Response} res HTTP response context.
- */
-exports.bucketRequest = async (req, res) => {
-  const LOCATION = 'US-EAST4';
-  const STORAGE_CLASS = 'STANDARD';
-  const TOPIC = 'bucket-changed';
+const LOCATION = 'US-EAST4';
+const STORAGE_CLASS = 'STANDARD';
+const TOPIC = 'bucket-changed';
 
-  const bucketName = req.body.bucketName;
+/**
+ * Trigger for a bucket request
+ *
+ * @param {object} message The Pub/Sub message.
+ * @param {object} context The event metadata.
+ */
+exports.bucketRequest = async (message) => {
+  const bucketName = message.bucketName || null;
+
+  console.info(`bucketName: ${bucketName}`);
 
   const storage = new Storage();
 
@@ -25,6 +27,4 @@ exports.bucketRequest = async (req, res) => {
   // creates notification for bucket
   await storage.bucket(bucketName).createNotification(TOPIC);
   console.log(`Bucket ${bucketName} registered for ${TOPIC} topic!`);
-
-  res.status(200).send(`${bucketName} created and setup`);
 };
