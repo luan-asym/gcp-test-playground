@@ -5,13 +5,19 @@ const STORAGE_CLASS = 'STANDARD';
 const TOPIC = 'bucket-changed';
 
 /**
- * Creates Google Storage Bucket
+ * Trigger for a bucket request
  *
- * @param {!express:Request} req HTTP request context.
- * @param {!express:Response} res HTTP response context.
+ * @param {object} message The Pub/Sub message.
+ * @param {object} context The event metadata.
  */
-exports.createBucket = async (req, res) => {
-  const bucketName = req.body.bucketName;
+exports.bucketRequest = async (message) => {
+  const data = JSON.parse(Buffer.from(message.data, 'base64').toString());
+
+  console.log(data);
+
+  const bucketName = data.bucketName || null;
+
+  console.info(`bucketName: ${bucketName}`);
 
   const storage = new Storage();
 
@@ -25,6 +31,4 @@ exports.createBucket = async (req, res) => {
   // creates notification for bucket
   await storage.bucket(bucketName).createNotification(TOPIC);
   console.log(`Bucket ${bucketName} registered for ${TOPIC} topic!`);
-
-  res.status(200).send(`${bucketName} created and setup`);
 };
