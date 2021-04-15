@@ -8,7 +8,7 @@ const TOPIC = 'bucket-request';
  * @param {!express:Request} req HTTP request context.
  * @param {!express:Response} res HTTP response context.
  */
-exports.processFormSubmit = async (req, res) => {
+exports.onFormSubmit = async (req, res) => {
   const message = req.body;
 
   const timestamp = message.timestamp;

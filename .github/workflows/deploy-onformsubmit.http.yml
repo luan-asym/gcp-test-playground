@@ -1,4 +1,4 @@
-name: Deploy processFormSubmit
+name: Deploy onFormSubmit
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: formsubmit-http
+        working-directory: onformsubmit-http
 
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud functions deploy processFormSubmit --trigger-http \
+          gcloud functions deploy onFormSubmit --trigger-http \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB
