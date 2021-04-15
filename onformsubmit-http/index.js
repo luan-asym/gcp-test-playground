@@ -31,7 +31,8 @@ exports.onFormSubmit = async (req, res) => {
   console.info(Q2);
   console.info(Q3);
 
-  if (createBucket) {
+  // creates a bucket
+  if (createBucket == 'True') {
     const pubSubClient = new PubSub();
 
     // serialize data
@@ -53,5 +54,7 @@ exports.onFormSubmit = async (req, res) => {
     } catch (err) {
       res.status(400).send(`Error: ${err.message}`);
     }
+  } else {
+    res.status(200).send('Answers logged');
   }
 };
