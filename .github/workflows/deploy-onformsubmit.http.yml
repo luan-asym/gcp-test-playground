@@ -2,6 +2,8 @@ name: Deploy onFormSubmit
 
 on:
   push:
+    branches:
+      - master
 
 env:
   GITHUB_SHA: ${{ github.sha }}
