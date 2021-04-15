@@ -22,11 +22,12 @@ exports.onFormSubmit = async (req, res) => {
   // [1] "Bucket Name"
   const [createBucket, bucketName, ...others] = responses;
 
-  console.info(createBucket);
-  console.info(bucketName);
+  console.info(`${createBucket} is a ${typeof createBucket}`);
+  console.info(`bucketName: ${bucketName}`);
 
   // [2..4] Testing Questions
   const [Q1, Q2, Q3] = others;
+  console.info('--Question Answers--');
   console.info(Q1);
   console.info(Q2);
   console.info(Q3);
