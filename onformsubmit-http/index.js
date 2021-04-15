@@ -22,7 +22,7 @@ exports.onFormSubmit = async (req, res) => {
   // [1] "Bucket Name"
   const [createBucket, bucketName, ...others] = responses;
 
-  console.info(`Create bucket?${createBucket}`);
+  console.info(`Create bucket? ${createBucket}`);
   console.info(`bucketName: ${bucketName}`);
 
   // [2..4] Testing Questions
