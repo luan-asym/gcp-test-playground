@@ -2,8 +2,6 @@ name: Deploy onFormSubmit
 
 on:
   push:
-    branches:
-      - master
 
 env:
   GITHUB_SHA: ${{ github.sha }}
@@ -27,7 +25,8 @@ jobs:
 
       - name: Deploy
         run: |
-          gcloud functions deploy onFormSubmit --trigger-http \
+          gcloud functions deploy onFormSubmit \
+            --trigger-http \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB
