@@ -22,7 +22,7 @@ exports.onFormSubmit = async (req, res) => {
   // [1] "Bucket Name"
   const [createBucket, bucketName, ...others] = responses;
 
-  console.info(`${createBucket} is a ${typeof createBucket}`);
+  console.info(`Create bucket?${createBucket}`);
   console.info(`bucketName: ${bucketName}`);
 
   // [2..4] Testing Questions
@@ -33,7 +33,7 @@ exports.onFormSubmit = async (req, res) => {
   console.info(Q3);
 
   // creates a bucket
-  if (createBucket == 'True') {
+  if (createBucket === 'True') {
     const pubSubClient = new PubSub();
 
     // serialize data
