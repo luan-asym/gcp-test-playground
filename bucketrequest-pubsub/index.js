@@ -11,7 +11,7 @@ const TOPIC = 'bucket-changed';
  * @param {object} context The event metadata.
  */
 exports.bucketRequest = async (message) => {
-  const bucketName = message.bucketName || null;
+  const bucketName = message.body.bucketName || null;
 
   console.info(`bucketName: ${bucketName}`);
 
