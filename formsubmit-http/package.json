@@ -2,7 +2,6 @@
   "name": "formsubmit-http",
   "version": "0.0.1",
   "dependencies": {
-    "axios": "0.21.1",
-    "google-auth-library": "7.0.4"
+    "@google-cloud/pubsub": "2.10.0"
   }
 }

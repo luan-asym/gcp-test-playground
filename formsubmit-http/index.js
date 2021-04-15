@@ -1,8 +1,6 @@
-const axios = require('axios').default;
-const { GoogleAuth } = require('google-auth-library');
-const { URL } = require('url');
+const { PubSub } = require('@google-cloud/pubsub');
 
-const url = 'https://us-east4-gcp-testing-308520.cloudfunctions.net/createBucket';
+const TOPIC = 'bucket-request';
 
 /**
  * Processes Google Form Submission
@@ -34,52 +32,26 @@ exports.processFormSubmit = async (req, res) => {
   console.info(Q3);
 
   if (createBucket) {
-    const token = await Promise.resolve(
-      getAuthToken().catch((err) => {
-        console.error(err);
-      })
-    );
+    const pubSubClient = new PubSub();
 
-    console.info(`TOKEN: ${token}`);
-
-    const headers = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const payload = {
+    // serialize data
+    const data = JSON.stringify({
+      timestamp: timestamp,
       bucketName: bucketName,
-    };
+      email: email,
+      q1: Q1,
+      q2: Q2,
+      q3: Q3,
+    });
+    const dataBuffer = Buffer.from(data);
 
-    axios.post(CREATE_BUCKET_URL, payload, headers).then(
-      (res) => {
-        console.log(res);
+    // publish to pubsub
+    try {
+      const messageId = await pubSubClient.topic(TOPIC).publish(dataBuffer);
 
-        res.send(`Bucket creation successful!`);
-      },
-      (err) => {
-        console.error(err);
-
-        res.status(400).send(`Bucket creation failed: ${err}`);
-      }
-    );
+      res.status(200).send(`messageId: ${messageId} published!`);
+    } catch (err) {
+      res.status(400).send(`Error: ${err.message}`);
+    }
   }
-};
-
-const getAuthToken = async () => {
-  const auth = new GoogleAuth();
-
-  const aud = new URL(url).origin;
-  console.info(`AUD: ${aud}`);
-
-  const client = await auth.getIdTokenClient(aud);
-
-  console.info(`CLIENT: ${client}`);
-
-  const res = await client.request({ url });
-
-  console.info(`RES: ${res}`);
-
-  return res;
 };
