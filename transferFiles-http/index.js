@@ -23,7 +23,7 @@ exports.transferFiles = async (req, res) => {
     await storage
       .bucket(srcBucket)
       .file(file.name)
-      .copy(storage.bucket(destBucket).file(file.name));
+      .copy(storage.bucket(destBucket).file(`${file.name}`));
 
     console.log(`${file.name} copied!`);
     if (deleteSrc) {
