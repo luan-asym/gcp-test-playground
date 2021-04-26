@@ -1,6 +1,6 @@
-# Bucket Request
+# Create Bucket
 
-> Creates bucket from a Pub/Sub trigger and creates Pub/Sub notification to watch for changes
+> Creates bucket and creates Pub/Sub notification to watch for changes
 
 <p align="center">
   <a href="https://github.com/luan-asym/gcp-test-playground/actions/workflows/deploy-bucketrequest.pubsub.yml">
@@ -8,10 +8,15 @@
   </a>
 </p>
 
+## Params
+
+| key            | value   | default          | description                                                                                                        |
+| -------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `bucketName`   | string  | **REQUIRED**     | The name of the bucket to be created                                                                               |
+| `location`     | string  | `US-EAST4`       | [The storage location of the bucket](https://cloud.google.com/storage/docs/locations#location-r)                   |
+| `storageClass` | string  | `STANDARD`       | [The storage class of the bucket](https://cloud.google.com/storage/docs/storage-classes#available_storage_classes) |
+| `topic`        | boolean | `bucket-changed` | The Pub/Sub topic to publish bucket changes to                                                                     |
+
 ## Additional Notes
 
-- This function requires a preexisiting Pub/Sub topic `bucket-changed` and `bucket-request` in order to work properly
-
-## References
-
-- https://cloud.google.com/storage/docs/reporting-changes
+- [The default topic `bucket-changed` needs to be created for the function to work properly](https://cloud.google.com/storage/docs/reporting-changes#prereqs)
