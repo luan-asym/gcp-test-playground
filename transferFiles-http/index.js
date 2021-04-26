@@ -13,12 +13,9 @@ exports.transferFiles = async (req, res) => {
   const destBucket = req.body.destBucket || 'gcp-bucket-destination';
   const deleteSrc = req.body.deleteSrc || false;
 
-  const [files] = req.body.fileList
-    ? req.body.fileList
-    : await storage.bucket(srcBucket).getFiles();
+  const [files] = await storage.bucket(srcBucket).getFiles();
 
   console.log(`files: ${files}`);
-  console.log(req.body.fileList);
 
   files.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
