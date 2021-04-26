@@ -10,7 +10,7 @@ const TOPIC = 'bucket-changed';
  * @param {!express:Request} req HTTP request context.
  * @param {!express:Response} res HTTP response context.
  */
-exports.createBucket = async (req, res) => {
+exports.bucketRequest = async (req, res) => {
   const bucketName = req.body.bucketName;
   const location = req.body.location || LOCATION;
   const storageClass = req.body.storageClass || STORAGE_CLASS;
