@@ -13,12 +13,16 @@ exports.transferFiles = async (req, res) => {
   const destBucket = req.body.destBucket || 'gcp-bucket-destination';
   const deleteSrc = req.body.deleteSrc || false;
 
-  const [files] = await storage.bucket(srcBucket).getFiles();
+  const [srcFiles] = await storage.bucket(srcBucket).getFiles();
 
-  console.log(`files: ${files}`);
+  console.log(`srcFiles: ${srcFiles}`);
 
-  files.forEach(async (file) => {
+  srcFiles.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
+
+    if (storage.bucket(destBucket).exists(file)) {
+      console.log(`${file.name} is already in destination!`);
+    }
 
     await storage
       .bucket(srcBucket)
