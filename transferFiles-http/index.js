@@ -32,5 +32,5 @@ exports.transferFiles = async (req, res) => {
     }
   });
 
-  res.status(200).send(`${files.length} file(s) moved from ${srcBucket} to ${destBucket}`);
+  res.status(200).send(`${srcFiles.length} file(s) moved from ${srcBucket} to ${destBucket}`);
 };
