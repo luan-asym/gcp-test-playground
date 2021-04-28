@@ -30,14 +30,13 @@ exports.transferFiles = async (req, res) => {
       const archivedName = `${file.name}-${metadata.timeCreated}`;
       const contentType = metadata.contentType;
 
+      // ignore folders
       console.log(`${file.name} is a ${contentType}`);
-      if (contentType == 'text/plain') {
-        console.log(`tis a folder`);
+      if (contentType != 'text/plain') {
+        // archive file
+        console.log(`Renaming ${file.name} to ${archivedName}`);
+        await storage.bucket(destBucket).file(file.name).rename(archivedName);
       }
-
-      // archive file
-      console.log(`Renaming ${file.name} to ${archivedName}`);
-      await storage.bucket(destBucket).file(file.name).rename(archivedName);
     }
 
     // copy over file
