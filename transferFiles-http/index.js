@@ -20,6 +20,8 @@ exports.transferFiles = async (req, res) => {
   srcFiles.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
 
+    console.log(`${await storage.bucket(destBucket).file(file.name).exists()[0]}`);
+
     if (await storage.bucket(destBucket).file(file.name).exists()[0]) {
       console.log(`${file.name} already exists!`);
 
