@@ -14,7 +14,8 @@ exports.transferFiles = async (req, res) => {
   const deleteSrc = req.body.deleteSrc || false;
 
   // check if buckets exist
-  const srcBucket;
+  let srcBucket, destBucket;
+
   const srcBucketExists = await storage.bucket(srcBucketName).exists();
   if (srcBucketExists[0]) {
     srcBucket = storage.bucket(srcBucketName);
@@ -22,7 +23,6 @@ exports.transferFiles = async (req, res) => {
     res.status(404).send(`srcBucket ${srcBucket} not found`);
   }
 
-  const destBucket;
   const destBucketExists = await storage.bucket(destBucketName).exists();
   if (destBucketExists[0]) {
     destBucket = storage.bucket(destBucketName);
@@ -56,9 +56,9 @@ exports.transferFiles = async (req, res) => {
 
     // copy over file
     await srcBucket.file(file.name).copy(destBucket.file(file.name));
-
     console.log(`${file.name} copied!`);
 
+    // if flagged, delete file from srcBucket
     if (deleteSrc) {
       await srcBucket.file(file.name).delete();
       console.log(`${file} deleted!`);
