@@ -26,17 +26,19 @@ exports.transferFiles = async (req, res) => {
     if (existsData[0]) {
       console.log(`${file.name} already exists!`);
 
-      // archive old file
+      // parse object metadata
       const [metadata] = await storage.bucket(destBucket).file(file.name).getMetadata();
-      const archivedName = `${file.name}-${timeCreated}`;
-      console.log(`Renaming ${file.name} to ${archivedName}`);
-      await storage.bucket(destBucket).file(file.name).rename(archivedName);
-
+      const archivedName = `${file.name}-${metadata.timeCreated}`;
       const contentType = metadata.contentType;
+
       console.log(`${file.name} is a ${contentType}`);
       if (metadata.contentType == 'Folder') {
         console.log(`tis a folder`);
       }
+
+      // archive file
+      console.log(`Renaming ${file.name} to ${archivedName}`);
+      await storage.bucket(destBucket).file(file.name).rename(archivedName);
     }
 
     // copy over file
