@@ -17,6 +17,7 @@ exports.transferFiles = async (req, res) => {
   let srcBucket, destBucket;
 
   const srcBucketExists = await storage.bucket(srcBucketName).exists();
+  console.log(`src is: ${srcBucketExists}`);
   if (srcBucketExists[0]) {
     srcBucket = storage.bucket(srcBucketName);
   } else {
@@ -24,6 +25,7 @@ exports.transferFiles = async (req, res) => {
   }
 
   const destBucketExists = await storage.bucket(destBucketName).exists();
+  console.log(`dest is: ${destBucketExists}`);
   if (destBucketExists[0]) {
     destBucket = storage.bucket(destBucketName);
   } else {
