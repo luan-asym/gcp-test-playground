@@ -14,26 +14,36 @@ exports.transferFiles = async (req, res) => {
   const deleteSrc = req.body.deleteSrc || false;
 
   // check if buckets exist
-  let srcBucket, destBucket;
+  let srcBucket, srcBucketExists, destBucket, destBucketExists;
+  try {
+    srcBucketExists = await storage.bucket(srcBucketName).exists();
 
-  const srcBucketExists = await storage.bucket(srcBucketName).exists();
-  console.log(`src is: ${srcBucketExists}`);
-  if (srcBucketExists[0]) {
-    srcBucket = storage.bucket(srcBucketName);
-  } else {
-    res.status(404).send(`srcBucket ${srcBucket} not found`);
+    if (srcBucketExists[0]) {
+      srcBucket = storage.bucket(srcBucketName);
+    } else {
+      res.status(404).send(`srcBucket: ${srcBucket} not found`);
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(401).send(`Unauthorized to access ${srcBucketName}`);
   }
 
-  const destBucketExists = await storage.bucket(destBucketName).exists();
-  console.log(`dest is: ${destBucketExists}`);
-  if (destBucketExists[0]) {
-    destBucket = storage.bucket(destBucketName);
-  } else {
-    res.status(404).send(`destBucket ${destBucket} not found`);
+  try {
+    destBucketExists = await storage.bucket(destBucketName).exists();
+
+    if (destBucketExists[0]) {
+      destBucket = storage.bucket(destBucketName);
+    } else {
+      res.status(404).send(`destBucket: ${destBucket} not found`);
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(401).send(`Unauthorized to access ${srcBucketName}`);
   }
 
   // iterate through all files in srcBucket
   const [srcFiles] = await srcBucket.getFiles();
+
   srcFiles.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
 
