@@ -44,7 +44,7 @@ exports.transferFiles = async (req, res) => {
   // iterate through all files in srcBucket
   const [srcFiles] = await srcBucket.getFiles();
 
-  for await (file of srcFiles) {
+  for (file of srcFiles) {
     console.log(`Processing ${file.name}...`);
 
     // check if file exists
