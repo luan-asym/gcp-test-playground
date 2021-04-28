@@ -20,9 +20,8 @@ exports.transferFiles = async (req, res) => {
   srcFiles.forEach(async (file) => {
     console.log(`Processing ${file.name}...`);
 
+    // check if file exists
     const existsData = await storage.bucket(destBucket).file(file.name).exists();
-    console.log(existsData[0]);
-
     if (existsData[0]) {
       console.log(`${file.name} already exists!`);
 
@@ -32,7 +31,7 @@ exports.transferFiles = async (req, res) => {
       const contentType = metadata.contentType;
 
       console.log(`${file.name} is a ${contentType}`);
-      if (metadata.contentType == 'Folder') {
+      if (contentType == 'text/plain') {
         console.log(`tis a folder`);
       }
 
