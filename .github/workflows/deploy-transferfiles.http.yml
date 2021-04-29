@@ -1,9 +1,6 @@
 name: Deploy transferFiles
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 env:
   GITHUB_SHA: ${{ github.sha }}
