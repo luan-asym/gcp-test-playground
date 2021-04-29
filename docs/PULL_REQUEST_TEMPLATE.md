@@ -4,8 +4,6 @@
 
 ## Pull Request Type
 
-Please delete options that are not relevant.
-
 - [ ] New feature
 - [ ] Bug fix
 - [ ] This change requires a documentation update
