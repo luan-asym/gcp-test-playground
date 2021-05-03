@@ -1,6 +1,7 @@
 const { PubSub } = require('@google-cloud/pubsub');
 
-const TOPIC = 'bucket-request';
+const BUCKET_REQUEST_TOPIC = 'bucket-request';
+const FIRESTORE_LOG_TOPIC = 'firestore-log';
 
 /**
  * Processes Google Form Submission
@@ -49,9 +50,16 @@ exports.onFormSubmit = async (req, res) => {
 
     // publish to pubsub
     try {
-      const messageId = await pubSubClient.topic(TOPIC).publish(dataBuffer);
+      const bucketRequestMessageId = await pubSubClient
+        .topic(BUCKET_REQUEST_TOPIC)
+        .publish(dataBuffer);
+      const firestoreLogMessageId = await pubSubClient
+        .topic(FIRESTORE_LOG_TOPIC)
+        .publish(dataBuffer);
 
-      res.status(200).send(`messageId: ${messageId} published!`);
+      res
+        .status(200)
+        .send(`MessageID: ${bucketRequestMessageId}, ${firestoreLogMessageId} published!`);
     } catch (err) {
       res.status(400).send(`Error: ${err.message}`);
     }
