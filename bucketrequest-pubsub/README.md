@@ -10,12 +10,12 @@
 
 ## Params
 
-| key            | value   | default          | description                                                                                                        |
-| -------------- | ------- | ---------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `bucketName`   | string  | **REQUIRED**     | The name of the bucket to be created                                                                               |
-| `location`     | string  | `US-EAST4`       | [The storage location of the bucket](https://cloud.google.com/storage/docs/locations#location-r)                   |
-| `storageClass` | string  | `STANDARD`       | [The storage class of the bucket](https://cloud.google.com/storage/docs/storage-classes#available_storage_classes) |
-| `topic`        | boolean | `bucket-changed` | The Pub/Sub topic to publish bucket changes to                                                                     |
+| key            | value  | default          | description                                                                                                        |
+| -------------- | ------ | ---------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `bucketName`   | string | **REQUIRED**     | The name of the bucket to be created                                                                               |
+| `location`     | string | `US-EAST4`       | [The storage location of the bucket](https://cloud.google.com/storage/docs/locations#location-r)                   |
+| `storageClass` | string | `STANDARD`       | [The storage class of the bucket](https://cloud.google.com/storage/docs/storage-classes#available_storage_classes) |
+| `topic`        | string | `bucket-changed` | The Pub/Sub topic to publish bucket changes to                                                                     |
 
 ## Additional Notes
 

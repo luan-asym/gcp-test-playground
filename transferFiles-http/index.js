@@ -9,28 +9,75 @@ const { Storage } = require('@google-cloud/storage');
 exports.transferFiles = async (req, res) => {
   const storage = new Storage();
 
-  const srcBucket = req.body.srcBucket || 'gcp-bucket-deposit';
-  const destBucket = req.body.destBucket || 'gcp-bucket-destination';
+  const srcBucketName = req.body.srcBucket || 'gcp-bucket-deposit';
+  const destBucketName = req.body.destBucket || 'gcp-bucket-destination';
   const deleteSrc = req.body.deleteSrc || false;
 
-  const [files] = await storage.bucket(srcBucket).getFiles();
+  // check if buckets exist
+  let srcBucket, srcBucketExists, destBucket, destBucketExists;
+  try {
+    srcBucketExists = await storage.bucket(srcBucketName).exists();
 
-  console.log(`files: ${files}`);
+    if (srcBucketExists[0]) {
+      srcBucket = storage.bucket(srcBucketName);
+    } else {
+      res.status(404).send(`srcBucket: ${srcBucket} not found`);
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(401).send(`Unauthorized to access ${srcBucketName}`);
+  }
 
-  files.forEach(async (file) => {
+  try {
+    destBucketExists = await storage.bucket(destBucketName).exists();
+
+    if (destBucketExists[0]) {
+      destBucket = storage.bucket(destBucketName);
+    } else {
+      res.status(404).send(`destBucket: ${destBucket} not found`);
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(401).send(`Unauthorized to access ${srcBucketName}`);
+  }
+
+  // iterate through all files in srcBucket
+  const [srcFiles] = await srcBucket.getFiles();
+
+  for (file of srcFiles) {
     console.log(`Processing ${file.name}...`);
 
-    await storage
-      .bucket(srcBucket)
-      .file(file.name)
-      .copy(storage.bucket(destBucket).file(file.name));
+    // check if file exists
+    const existsData = await destBucket.file(file.name).exists();
+    if (existsData[0]) {
+      console.log(`${file.name} already exists!`);
 
+      // parse object metadata
+      const [metadata] = await destBucket.file(file.name).getMetadata();
+      const archivedName = `${file.name}-${metadata.timeCreated}`;
+      const contentType = metadata.contentType;
+
+      // ignore folders
+      console.log(`${file.name} is a ${contentType}`);
+      if (contentType != 'text/plain') {
+        // archive file
+        console.log(`Renaming ${file.name} to ${archivedName}`);
+        await destBucket.file(file.name).rename(archivedName);
+      }
+    }
+
+    // copy over file
+    await srcBucket.file(file.name).copy(destBucket.file(file.name));
     console.log(`${file.name} copied!`);
+
+    // if flagged, delete file from srcBucket
     if (deleteSrc) {
-      await storage.bucket(srcBucket).file(file.name).delete();
+      await srcBucket.file(file.name).delete();
       console.log(`${file} deleted!`);
     }
-  });
+  }
 
-  res.status(200).send(`${files.length} file(s) moved from ${srcBucket} to ${destBucket}`);
+  res
+    .status(200)
+    .send(`${srcFiles.length} file(s) moved from ${srcBucketName} to ${destBucketName}`);
 };
