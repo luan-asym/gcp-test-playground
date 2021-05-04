@@ -9,7 +9,7 @@ const TOPIC = 'firestore-log';
  * @param {!express:Response} res HTTP response context.
  */
 exports.logToFirestore = async (req, res) => {
-  const message = req.body;
+  const message = req;
 
   console.log(`message: ${JSON.stringify(message)}`);
 
