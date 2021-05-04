@@ -11,14 +11,14 @@ const TOPIC = 'firestore-log';
 exports.logToFirestore = async (req, res) => {
   const message = req.body;
 
+  console.log(`message: ${JSON.stringify(message)}`);
+
   const timestamp = message.timestamp;
   const bucketName = message.bucketName;
   const email = message.email;
   const q1 = message.q1;
   const q2 = message.q2;
   const q3 = message.q3;
-
-  console.log(`message: ${JSON.stringify(message)}`);
 
   // create client and get bucket doc
   const firestore = new Firestore();
