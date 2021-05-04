@@ -1,4 +1,3 @@
-const { PubSub } = require('@google-cloud/pubsub');
 const { Firestore } = require('@google-cloud/firestore');
 
 const TOPIC = 'firestore-log';
@@ -21,6 +20,8 @@ exports.logToFirestore = async (req, res) => {
 
   console.log(`message: ${JSON.stringify(message)}`);
 
+  // create client and get bucket doc
+  const firestore = new Firestore();
   const document = firestore.doc(`bucket/${bucketName}`);
 
   try {
