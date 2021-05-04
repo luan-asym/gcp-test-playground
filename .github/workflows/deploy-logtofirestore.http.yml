@@ -25,7 +25,7 @@ jobs:
       - name: Deploy
         run: |
           gcloud functions deploy logToFirestore \
-            --trigger-http \
+            --trigger-topic firestore-log \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB
