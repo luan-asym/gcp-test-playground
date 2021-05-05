@@ -23,7 +23,7 @@ exports.logToFirestore = async (psMessage) => {
   const firestore = new Firestore();
   const collection = firestore.collection('bucket');
 
-  // add firestore entry of form answers
+  // add firestore entry with form answers
   try {
     const data = {
       submissionTime: timestamp,
