@@ -1,0 +1,7 @@
+{
+  "name": "onbucketchange-pubsub",
+  "version": "0.0.1",
+  "dependencies": {
+    "@google-cloud/firestore": "4.10.1"
+  }
+}

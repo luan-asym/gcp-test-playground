@@ -1,7 +1,5 @@
 const { Firestore } = require('@google-cloud/firestore');
 
-const TOPIC = 'firestore-log';
-
 /**
  * Trigger to log Google Form into Firestore
  *
