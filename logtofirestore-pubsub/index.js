@@ -3,15 +3,15 @@ const { Firestore } = require('@google-cloud/firestore');
 const TOPIC = 'firestore-log';
 
 /**
- * Processes Google Form Submission
+ * Trigger to log Google Form into Firestore
  *
- * @param {!express:Request} req HTTP request context.
- * @param {!express:Response} res HTTP response context.
+ * @param {object} message The Pub/Sub message.
+ * @param {object} context The event metadata.
  */
-exports.logToFirestore = async (req, res) => {
-  const message = req;
+exports.logToFirestore = async (psMessage) => {
+  const message = Buffer.from(psMessage.data, 'base64').toString();
 
-  console.log(`message: ${JSON.stringify(message)}`);
+  console.log(`Message: ${message}`);
 
   const timestamp = message.timestamp;
   const bucketName = message.bucketName;
@@ -34,8 +34,8 @@ exports.logToFirestore = async (req, res) => {
     });
     console.log(`Entry logged!`);
   } catch (err) {
-    res.status(400).send(`Error: ${err.message}`);
+    console.log(`Error: ${err.message}`);
   }
 
-  res.status(200).send('Sucessful run!');
+  console.log(`Successful run!`);
 };
