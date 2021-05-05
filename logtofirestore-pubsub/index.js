@@ -26,16 +26,15 @@ exports.logToFirestore = async (psMessage) => {
 
   try {
     const data = {
-      timestamp: timestamp,
+      submissionTime: timestamp,
       email: email,
-      q1: q1,
-      q2: q2,
-      q3: q3,
+      Q1: q1,
+      Q2: q2,
+      Q3: q3,
     };
-    console.log(`data: ${JSON.stringify(data)}`);
 
-    const document = await collection.add(data);
-    console.log(`document: ${document}`);
+    const document = await collection.doc(bucketName).set(data);
+    console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
