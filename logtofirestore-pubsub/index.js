@@ -25,13 +25,16 @@ exports.logToFirestore = async (psMessage) => {
   const document = firestore.doc(`bucket/${bucketName}`);
 
   try {
-    await document.set({
+    const data = {
       timestamp: timestamp,
       email: email,
       q1: q1,
       q2: q2,
       q3: q3,
-    });
+    };
+    console.log(`data: ${data}`);
+
+    await document.set(data);
     console.log(`Entry logged!`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
