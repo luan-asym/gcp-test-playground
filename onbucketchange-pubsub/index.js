@@ -12,9 +12,9 @@ exports.onBucketChange = async (psMessage) => {
 
   console.log(`Message: ${JSON.stringify(message)}`);
 
-  const timestamp = attributes.timestamp;
-  const bucketName = attributes.bucketId;
+  const timestamp = attributes.eventTime;
   const event = attributes.eventType;
+  const bucketName = attributes.bucketId;
   const file = attributes.objectId;
 
   console.log(`Bucket: ${bucketName}`);
