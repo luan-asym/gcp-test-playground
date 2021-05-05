@@ -8,7 +8,7 @@ const { Firestore } = require('@google-cloud/firestore');
  */
 exports.onBucketChange = async (psMessage) => {
   const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
-  const attributes = psMessage.attribute;
+  const attributes = psMessage.attributes;
 
   console.log(`Message: ${JSON.stringify(message)}`);
 
@@ -16,7 +16,7 @@ exports.onBucketChange = async (psMessage) => {
   const event = attributes.eventType;
   const bucketName = attributes.bucketId;
   const file = attributes.objectId;
-
+  console.log(`Timestamp: ${timestamp}`);
   console.log(`Bucket: ${bucketName}`);
   console.log(`Event: ${event}`);
   console.log(`Object: ${file}`);
