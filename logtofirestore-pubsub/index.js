@@ -9,9 +9,9 @@ const TOPIC = 'firestore-log';
  * @param {object} context The event metadata.
  */
 exports.logToFirestore = async (psMessage) => {
-  const message = Buffer.from(psMessage.data, 'base64').toString();
+  const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
 
-  console.log(`Message: ${message}`);
+  console.log(`Message: ${JSON.stringify(message)}`);
 
   const timestamp = message.timestamp;
   const bucketName = message.bucketName;
@@ -32,7 +32,7 @@ exports.logToFirestore = async (psMessage) => {
       q2: q2,
       q3: q3,
     };
-    console.log(`data: ${data}`);
+    console.log(`data: ${JSON.stringify(data)}`);
 
     const document = await collection.add(data);
     console.log(`document: ${document}`);
