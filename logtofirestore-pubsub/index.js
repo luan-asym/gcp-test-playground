@@ -11,6 +11,7 @@ exports.logToFirestore = async (psMessage) => {
 
   console.log(`Message: ${JSON.stringify(message)}`);
 
+  // extract pubsub message data
   const timestamp = message.timestamp;
   const bucketName = message.bucketName;
   const email = message.email;
@@ -18,10 +19,11 @@ exports.logToFirestore = async (psMessage) => {
   const q2 = message.q2;
   const q3 = message.q3;
 
-  // create client and get bucket doc
+  // create client and get bucket collection
   const firestore = new Firestore();
   const collection = firestore.collection('bucket');
 
+  // add firestore entry of form answers
   try {
     const data = {
       submissionTime: timestamp,

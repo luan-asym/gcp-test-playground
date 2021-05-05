@@ -12,19 +12,17 @@ exports.onBucketChange = async (psMessage) => {
 
   console.log(`Message: ${JSON.stringify(message)}`);
 
+  // extract pubsub message data
   const timestamp = attributes.eventTime;
   const event = attributes.eventType;
   const bucketName = attributes.bucketId;
   const file = attributes.objectId;
-  console.log(`Timestamp: ${timestamp}`);
-  console.log(`Bucket: ${bucketName}`);
-  console.log(`Event: ${event}`);
-  console.log(`Object: ${file}`);
 
-  // create client and get bucket doc
+  // create client and get bucket collection
   const firestore = new Firestore();
   const collection = firestore.collection('bucket');
 
+  // update firestore entry with event data
   try {
     const data = {
       lastUpdateEvent: event,
@@ -32,7 +30,7 @@ exports.onBucketChange = async (psMessage) => {
       lastUpdateTime: timestamp,
     };
 
-    const document = await collection.doc(bucketName).set(data);
+    const document = await collection.doc(bucketName).set(data, { merge: true });
     console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
