@@ -22,7 +22,7 @@ exports.logToFirestore = async (psMessage) => {
 
   // create client and get bucket doc
   const firestore = new Firestore();
-  const document = firestore.doc(`bucket/${bucketName}`);
+  const collection = firestore.collection('bucket');
 
   try {
     const data = {
@@ -34,8 +34,8 @@ exports.logToFirestore = async (psMessage) => {
     };
     console.log(`data: ${data}`);
 
-    await document.set(data);
-    console.log(`Entry logged!`);
+    const document = await collection.add(data);
+    console.log(`document: ${document}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
