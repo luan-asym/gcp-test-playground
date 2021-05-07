@@ -10,10 +10,15 @@ const TOPIC = 'bucket-changed';
  * @param {!express:Request} req HTTP request context.
  * @param {!express:Response} res HTTP response context.
  */
-exports.bucketRequest = async (req, res) => {
-  const bucketName = req.body.bucketName;
-  const location = req.body.location || LOCATION;
-  const storageClass = req.body.storageClass || STORAGE_CLASS;
+exports.bucketRequest = async (psMessage) => {
+  const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
+
+  console.log(`Message: ${JSON.stringify(message)}`);
+
+  // extract pubsub message data
+  const bucketName = message.bucketName;
+  const location = message.location || LOCATION;
+  const storageClass = message.storageClass || STORAGE_CLASS;
 
   const storage = new Storage();
 
