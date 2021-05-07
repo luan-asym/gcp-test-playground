@@ -19,9 +19,8 @@ exports.validator = async (req, res) => {
   const collection = firestore.collection('bucket');
 
   try {
-    const document = await collection.doc(bucketName);
-
-    const data = document.data();
+    const documentRef = await collection.doc(bucketName).get();
+    const data = documentRef.data();
 
     console.log(`${bucket} submissionTime: ${data.submissionTime}`);
     console.log(`Submitted by: ${data.email}`);
