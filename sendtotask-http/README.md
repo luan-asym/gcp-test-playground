@@ -1,6 +1,6 @@
 # Send To Cloud Tasks
 
-> Sends validation into a queue and waits 15 minutes until
+> Sends validation requests into a queue and waits 15 minutes until
 
 <p align="center">
   <a href="https://github.com/luan-asym/gcp-test-playground/actions/workflows/deploy-sendtotask.http.yml">
