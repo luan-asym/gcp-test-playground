@@ -31,6 +31,8 @@ exports.onBucketChange = async (psMessage) => {
 
   // update firestore entry with event data
   try {
+    const pubSubClient = new PubSub();
+
     const firestoreLogMessageId = await pubSubClient.topic(FIRESTORE_LOG_TOPIC).publish(dataBuffer);
 
     console.log(`MessageID: ${firestoreLogMessageId} published!`);
