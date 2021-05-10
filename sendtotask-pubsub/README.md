@@ -11,3 +11,4 @@
 ## Additional Notes
 
 - Requires a queue named `validation-queue` in Cloud Tasks
+- PubSub message **MUST** contain the param `bucketName`

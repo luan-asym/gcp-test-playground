@@ -15,14 +15,13 @@ const CHECK_INTERVAL = 1 * 60; // TODO: UPDATE TO 20 MINUTES
 exports.sendToTask = async (psMessage) => {
   try {
     const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
-    const attributes = psMessage.attributes;
 
     console.log(`Message: ${JSON.stringify(message)}`);
 
     // extract pubsub message data
-    // const timestamp = attributes.eventTime;
-    const bucketName = attributes.bucketId || 'gcp-bucket-firestore';
-    // const file = attributes.objectId;
+    const timestamp = message.lastUpdateTime;
+    const bucketName = message.bucketName || 'bucket';
+    const file = message.lastUpdateFile;
 
     // create client and construct queue name
     const client = new CloudTasksClient();
