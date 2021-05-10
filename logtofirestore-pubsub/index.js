@@ -14,17 +14,17 @@ exports.logToFirestore = async (psMessage) => {
   // extract message vars
   const bucketName = message.bucketName;
 
-  // null check bucketName
-  if (!bucketName) {
-    throw new Error('Error: bucketName must not be blank');
-  }
-
   // create client and get bucket collection
   const firestore = new Firestore();
   const collection = firestore.collection('bucket');
 
   // add firestore entry with form answers
   try {
+    // null check bucketName
+    if (!bucketName) {
+      throw new Error('bucketName must not be blank');
+    }
+
     const document = await collection.doc(bucketName).set(message, { merge: true });
     console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
