@@ -19,6 +19,11 @@ exports.logToFirestore = async (psMessage) => {
   const q2 = message.q2;
   const q3 = message.q3;
 
+  // bucketName error check
+  if (!bucketName) {
+    throw new Error('Error: bucketName cannot be empty');
+  }
+
   // create client and get bucket collection
   const firestore = new Firestore();
   const collection = firestore.collection('bucket');
