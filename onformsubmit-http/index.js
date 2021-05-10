@@ -12,7 +12,7 @@ const FIRESTORE_LOG_TOPIC = 'firestore-log';
 exports.onFormSubmit = async (req, res) => {
   const message = req.body;
 
-  const submissonTime = message.submissonTime;
+  const submissionTime = message.submissionTime;
   const email = message.email;
   const responses = JSON.parse(message.responses);
 
@@ -39,7 +39,7 @@ exports.onFormSubmit = async (req, res) => {
 
     // serialize data
     const data = JSON.stringify({
-      submissonTime: submissonTime,
+      submissionTime: submissionTime,
       bucketName: bucketName,
       email: email,
       Q1: Q1,
