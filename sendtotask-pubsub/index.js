@@ -29,8 +29,7 @@ exports.sendToTask = async (psMessage) => {
     const client = new CloudTasksClient();
     const parent = client.queuePath(PROJECT, LOCATION, QUEUE);
 
-    // https://www.npmjs.com/package/@google-cloud/tasks
-    console.log(`VALIDATOR URL: ${VALIDATOR_URL}`);
+    console.log(`Email: ${GCP_SA_EMAIL}`);
 
     const task = {
       httpRequest: {

@@ -15,9 +15,9 @@ As more secrets are added to the repository, they should be added to a list here
 
 ## Attaining Secrets
 
-| name          | instructions                                       |
-| ------------- | -------------------------------------------------- |
-| PROJECT_ID    | contact maintainer                                 |
-| GCP_SA_KEY    | contact maintainer                                 |
-| GCP_SA_EMAIL  | Use GCP Google Cloud Functions Service Agent email |
-| VALIDATOR_URL | use GCP to find Trigger URL for `validator`        |
+| name          | instructions                                |
+| ------------- | ------------------------------------------- |
+| PROJECT_ID    | contact maintainer                          |
+| GCP_SA_KEY    | contact maintainer                          |
+| GCP_SA_EMAIL  | PROJECT_ID@appspot.gserviceaccount.com      |
+| VALIDATOR_URL | use GCP to find Trigger URL for `validator` |
