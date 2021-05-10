@@ -35,8 +35,6 @@ exports.onFormSubmit = async (req, res) => {
 
   // creates a bucket
   if (createBucket === 'True') {
-    const pubSubClient = new PubSub();
-
     // serialize data
     const data = JSON.stringify({
       submissionTime: submissionTime,
@@ -50,6 +48,8 @@ exports.onFormSubmit = async (req, res) => {
 
     // publish to pubsub
     try {
+      const pubSubClient = new PubSub();
+
       const bucketRequestMessageId = await pubSubClient
         .topic(BUCKET_REQUEST_TOPIC)
         .publish(dataBuffer);
