@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: sendtotask-http
+        working-directory: sendtotask-pubsub
 
     steps:
       - uses: actions/checkout@v2
@@ -28,8 +28,8 @@ jobs:
           VALIDATOR_URL: ${{ secrets.VALIDATOR_URL }}
         run: |
           gcloud functions deploy sendToTask \
-            --trigger-http \
+            --trigger-topic task-request \
             --region=us-east4 \
             --runtime=nodejs12 \
-            --memory=128MB \
+            --memory=128MB
             --set-env-vars PROJECT_ID="$PROJECT_ID",VALIDATOR_URL="$VALIDATOR_URL"
