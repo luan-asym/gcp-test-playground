@@ -1,6 +1,6 @@
 # Bucket Change Trigger
 
-> Calls when Bucket changes
+> Trigger for Bucket changes
 
 <p align="center">
   <a href="https://github.com/luan-asym/gcp-test-playground/actions/workflows/deploy-onbucketchange.pubsub.yml">
