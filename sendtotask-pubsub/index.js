@@ -21,7 +21,7 @@ exports.sendToTask = async (psMessage) => {
 
     // extract pubsub message data
     const timestamp = attributes.eventTime;
-    const bucketName = attributes.bucketId;
+    const bucketName = attributes.bucketId || 'gcp-bucket-firestore';
     const file = attributes.objectId;
 
     // create client and construct queue name
@@ -35,11 +35,11 @@ exports.sendToTask = async (psMessage) => {
       httpRequest: {
         httpMethod: 'POST',
         url: VALIDATOR_URL,
-        body: {
-          bucketName: 'gcp-bucket-firestore',
-        },
       },
     };
+
+    // add payload
+    task.httpRequest.body = Buffer.from(bucketName).toString('base64');
 
     // schedule task to be 20 minutes from now
     task.scheduleTime = {
