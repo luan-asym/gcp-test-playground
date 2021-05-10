@@ -7,19 +7,23 @@ const { Firestore } = require('@google-cloud/firestore');
  * @param {object} context The event metadata.
  */
 exports.logToFirestore = async (psMessage) => {
-  const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
+  try {
+    const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
 
-  console.log(`Message: ${JSON.stringify(message)}`);
-
-  // extract message vars
-  const bucketName = message.bucketName;
-
-  // create client and get bucket collection
-  const firestore = new Firestore();
-  const collection = firestore.collection('bucket');
+    console.log(`Message: ${JSON.stringify(message)}`);
+  } catch (err) {
+    console.log(`Error: ${err.message}`);
+  } finally {
+    // extract message vars
+    const bucketName = message.bucketName;
+  }
 
   // add firestore entry with form answers
   try {
+    // create client and get bucket collection
+    const firestore = new Firestore();
+    const collection = firestore.collection('bucket');
+
     // null check bucketName
     if (!bucketName) {
       throw new Error('bucketName must not be blank');
