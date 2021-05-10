@@ -28,6 +28,7 @@ exports.validator = async (req, res) => {
     const documentRef = await collection.doc(bucketName).get();
     const data = documentRef.data();
 
+    // prints out data of bucket
     console.log(`DATA: ${JSON.stringify(data)}`);
     console.log(`${bucketName} submissionTime: ${data.submissionTime}`);
     console.log(`Submitted by: ${data.email}`);
