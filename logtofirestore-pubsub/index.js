@@ -7,33 +7,25 @@ const { Firestore } = require('@google-cloud/firestore');
  * @param {object} context The event metadata.
  */
 exports.logToFirestore = async (psMessage) => {
-  const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
-
-  console.log(`Message: ${JSON.stringify(message)}`);
-
-  // extract pubsub message data
-  const timestamp = message.timestamp;
-  const bucketName = message.bucketName;
-  const email = message.email;
-  const q1 = message.q1;
-  const q2 = message.q2;
-  const q3 = message.q3;
-
-  // create client and get bucket collection
-  const firestore = new Firestore();
-  const collection = firestore.collection('bucket');
-
-  // add firestore entry with form answers
   try {
-    const data = {
-      submissionTime: timestamp,
-      email: email,
-      Q1: q1,
-      Q2: q2,
-      Q3: q3,
-    };
+    const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
 
-    const document = await collection.doc(bucketName).set(data);
+    console.log(`Message: ${JSON.stringify(message)}`);
+
+    // extract message vars
+    const bucketName = message.bucketName;
+
+    // create client and get bucket collection
+    const firestore = new Firestore();
+    const collection = firestore.collection('bucket');
+
+    // null check bucketName
+    if (!bucketName) {
+      throw new Error('bucketName must not be blank');
+    }
+
+    // add firestore entry with form answers
+    const document = await collection.doc(bucketName).set(message, { merge: true });
     console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);

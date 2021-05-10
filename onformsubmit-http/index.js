@@ -12,12 +12,12 @@ const FIRESTORE_LOG_TOPIC = 'firestore-log';
 exports.onFormSubmit = async (req, res) => {
   const message = req.body;
 
-  const timestamp = message.timestamp;
+  const submissionTime = message.submissionTime;
   const email = message.email;
   const responses = JSON.parse(message.responses);
 
-  console.info(`Timestamp: ${timestamp}`);
-  console.info(`    Email: ${email}`);
+  console.info(`Submission Time: ${submissionTime}`);
+  console.info(`Email: ${email}`);
 
   // [0] "Create Bucket?"
   // [1] "Bucket Name"
@@ -35,21 +35,21 @@ exports.onFormSubmit = async (req, res) => {
 
   // creates a bucket
   if (createBucket === 'True') {
-    const pubSubClient = new PubSub();
-
     // serialize data
     const data = JSON.stringify({
-      timestamp: timestamp,
+      submissionTime: submissionTime,
       bucketName: bucketName,
       email: email,
-      q1: Q1,
-      q2: Q2,
-      q3: Q3,
+      Q1: Q1,
+      Q2: Q2,
+      Q3: Q3,
     });
     const dataBuffer = Buffer.from(data);
 
     // publish to pubsub
     try {
+      const pubSubClient = new PubSub();
+
       const bucketRequestMessageId = await pubSubClient
         .topic(BUCKET_REQUEST_TOPIC)
         .publish(dataBuffer);
