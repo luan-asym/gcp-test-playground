@@ -11,15 +11,10 @@ exports.logToFirestore = async (psMessage) => {
     const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
 
     console.log(`Message: ${JSON.stringify(message)}`);
-  } catch (err) {
-    console.log(`Error: ${err.message}`);
-  } finally {
+
     // extract message vars
     const bucketName = message.bucketName;
-  }
 
-  // add firestore entry with form answers
-  try {
     // create client and get bucket collection
     const firestore = new Firestore();
     const collection = firestore.collection('bucket');
@@ -29,11 +24,12 @@ exports.logToFirestore = async (psMessage) => {
       throw new Error('bucketName must not be blank');
     }
 
+    // add firestore entry with form answers
     const document = await collection.doc(bucketName).set(message, { merge: true });
     console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
+  } finally {
+    console.log(`Successful run!`);
   }
-
-  console.log(`Successful run!`);
 };
