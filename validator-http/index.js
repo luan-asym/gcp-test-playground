@@ -25,6 +25,7 @@ exports.validator = async (req, res) => {
       throw new Error('bucketName must not be blank');
     }
 
+    // check firestore entry with form answers
     const documentRef = await collection.doc(bucketName).get();
     const data = documentRef.data();
 
