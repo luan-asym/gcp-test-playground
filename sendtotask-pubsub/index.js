@@ -2,6 +2,7 @@ const { CloudTasksClient } = require('@google-cloud/tasks');
 
 const VALIDATOR_URL = process.env.VALIDATOR_URL;
 const PROJECT = process.env.PROJECT_ID;
+const GCP_SA_EMAIL = process.env.GCP_SA_EMAIL;
 
 const LOCATION = 'us-east4';
 const QUEUE = 'validation-queue';

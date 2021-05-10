@@ -26,10 +26,11 @@ jobs:
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           VALIDATOR_URL: ${{ secrets.VALIDATOR_URL }}
+          GCP_SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
         run: |
           gcloud functions deploy sendToTask \
             --trigger-topic task-request \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB \
-            --set-env-vars PROJECT_ID="$PROJECT_ID",VALIDATOR_URL="$VALIDATOR_URL"
+            --set-env-vars PROJECT_ID="$PROJECT_ID",VALIDATOR_URL="$VALIDATOR_URL",GCP_SA_EMAIL="$GCP_SA_EMAIL"
