@@ -11,6 +11,9 @@ exports.logToFirestore = async (psMessage) => {
 
   console.log(`Message: ${JSON.stringify(message)}`);
 
+  // extract message vars
+  const bucketName = message.bucketName;
+
   // create client and get bucket collection
   const firestore = new Firestore();
   const collection = firestore.collection('bucket');
