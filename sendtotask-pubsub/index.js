@@ -2,9 +2,10 @@ const { CloudTasksClient } = require('@google-cloud/tasks');
 
 const VALIDATOR_URL = process.env.VALIDATOR_URL;
 const PROJECT = process.env.PROJECT_ID;
+
 const LOCATION = 'us-east4';
 const QUEUE = 'validation-queue';
-const CHECK_INTERVAL = 1 * 60; // TODO: UPDATE TO 20 MINUTES
+const CHECK_INTERVAL = 20 * 60; // 20 minutes
 
 /**
  * Sends tasks to tasker
@@ -40,7 +41,7 @@ exports.sendToTask = async (psMessage) => {
     // add payload
     task.httpRequest.body = Buffer.from(bucketName).toString('base64');
 
-    // schedule task to be 20 minutes from now
+    // delay task time
     task.scheduleTime = {
       seconds: CHECK_INTERVAL + Date.now() / 1000,
     };
@@ -49,7 +50,7 @@ exports.sendToTask = async (psMessage) => {
     console.log(`Sending task: ${task}`);
     const request = { parent, task };
     const [response] = await client.createTask(request);
-    console.log(`Created Task ${JSON.stringify(response)}`);
+    console.log(`Created Task ${JSON.stringify(response.name)}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
