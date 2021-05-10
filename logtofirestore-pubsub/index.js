@@ -20,7 +20,7 @@ exports.logToFirestore = async (psMessage) => {
 
   // add firestore entry with form answers
   try {
-    const document = await collection.doc(bucketName).set(message);
+    const document = await collection.doc(bucketName).set(message, { merge: true });
     console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
