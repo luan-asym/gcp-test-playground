@@ -1,4 +1,6 @@
-const { Firestore } = require('@google-cloud/firestore');
+const { PubSub } = require('@google-cloud/pubsub');
+
+const FIRESTORE_LOG_TOPIC = 'firestore-log';
 
 /**
  * Trigger for when bucket changes
@@ -18,20 +20,20 @@ exports.onBucketChange = async (psMessage) => {
   const bucketName = attributes.bucketId;
   const file = attributes.objectId;
 
-  // create client and get bucket collection
-  const firestore = new Firestore();
-  const collection = firestore.collection('bucket');
+  // serialize data
+  const data = JSON.stringify({
+    bucketName: bucketName,
+    lastUpdateEvent: event,
+    lastUpdateFile: file,
+    lastUpdateTime: timestamp,
+  });
+  const dataBuffer = Buffer.from(data);
 
   // update firestore entry with event data
   try {
-    const data = {
-      lastUpdateEvent: event,
-      lastUpdateFile: file,
-      lastUpdateTime: timestamp,
-    };
+    const firestoreLogMessageId = await pubSubClient.topic(FIRESTORE_LOG_TOPIC).publish(dataBuffer);
 
-    const document = await collection.doc(bucketName).set(data, { merge: true });
-    console.log(`Document written at: ${document.writeTime.toDate()}`);
+    console.log(`MessageID: ${firestoreLogMessageId} published!`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
