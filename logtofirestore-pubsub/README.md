@@ -11,3 +11,4 @@
 ## Additional Notes
 
 - The default topic `firestore-log` needs to be created for the function to work properly
+- PubSub message **MUST** contain the param `bucketName`
