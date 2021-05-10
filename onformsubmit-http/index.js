@@ -39,12 +39,12 @@ exports.onFormSubmit = async (req, res) => {
 
     // serialize data
     const data = JSON.stringify({
-      timestamp: timestamp,
+      submissionTime: timestamp,
       bucketName: bucketName,
       email: email,
-      q1: Q1,
-      q2: Q2,
-      q3: Q3,
+      Q1: Q1,
+      Q2: Q2,
+      Q3: Q3,
     });
     const dataBuffer = Buffer.from(data);
 
