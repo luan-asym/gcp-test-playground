@@ -25,6 +25,9 @@ exports.logToFirestore = async (psMessage) => {
 
   // add firestore entry with form answers
   try {
+    // for (let [key, value] of Object.entries(message)) {
+    // }
+
     const data = {
       submissionTime: timestamp,
       email: email,
@@ -33,7 +36,7 @@ exports.logToFirestore = async (psMessage) => {
       Q3: q3,
     };
 
-    const document = await collection.doc(bucketName).set(data);
+    const document = await collection.doc(bucketName).set(message);
     console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
