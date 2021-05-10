@@ -20,9 +20,9 @@ exports.sendToTask = async (psMessage) => {
     console.log(`Message: ${JSON.stringify(message)}`);
 
     // extract pubsub message data
-    const timestamp = attributes.eventTime;
+    // const timestamp = attributes.eventTime;
     const bucketName = attributes.bucketId || 'gcp-bucket-firestore';
-    const file = attributes.objectId;
+    // const file = attributes.objectId;
 
     // create client and construct queue name
     const client = new CloudTasksClient();
