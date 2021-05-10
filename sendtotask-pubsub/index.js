@@ -4,6 +4,7 @@ const VALIDATOR_URL = process.env.VALIDATOR_URL;
 const PROJECT = process.env.PROJECT_ID;
 const LOCATION = 'us-east4';
 const QUEUE = 'validation-queue';
+const CHECK_INTERVAL = 1 * 60; // TODO: UPDATE TO 20 MINUTES
 
 /**
  * Sends tasks to tasker
@@ -23,11 +24,11 @@ exports.sendToTask = async (psMessage) => {
     const bucketName = attributes.bucketId;
     const file = attributes.objectId;
 
+    // create client and construct queue name
     const client = new CloudTasksClient();
-
-    // https://www.npmjs.com/package/@google-cloud/tasks
     const parent = client.queuePath(PROJECT, LOCATION, QUEUE);
 
+    // https://www.npmjs.com/package/@google-cloud/tasks
     console.log(`VALIDATOR URL: ${VALIDATOR_URL}`);
 
     const task = {
@@ -40,14 +41,16 @@ exports.sendToTask = async (psMessage) => {
       },
     };
 
-    const request = {
-      parent: parent,
-      task: task,
+    // schedule task to be 20 minutes from now
+    task.scheduleTime = {
+      seconds: CHECK_INTERVAL + Date.now() / 1000,
     };
 
+    // create and send task
     console.log(`Sending task: ${task}`);
+    const request = { parent, task };
     const [response] = await client.createTask(request);
-    console.log(`Created Task ${response}`);
+    console.log(`Created Task ${JSON.stringify(response)}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
