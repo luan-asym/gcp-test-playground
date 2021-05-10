@@ -1,6 +1,7 @@
 const { PubSub } = require('@google-cloud/pubsub');
 
 const FIRESTORE_LOG_TOPIC = 'firestore-log';
+const TASK_REQUEST_TOPIC = 'task-request';
 
 /**
  * Trigger for when bucket changes
@@ -34,8 +35,9 @@ exports.onBucketChange = async (psMessage) => {
     const pubSubClient = new PubSub();
 
     const firestoreLogMessageId = await pubSubClient.topic(FIRESTORE_LOG_TOPIC).publish(dataBuffer);
+    const taskRequestMessageId = await pubSubClient.topic(TASK_REQUEST_TOPIC).publish(dataBuffer);
 
-    console.log(`MessageID: ${firestoreLogMessageId} published!`);
+    console.log(`MessageID: ${firestoreLogMessageId}, ${taskRequestMessageId} published!`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
