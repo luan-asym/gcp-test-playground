@@ -12,12 +12,12 @@ const FIRESTORE_LOG_TOPIC = 'firestore-log';
 exports.onFormSubmit = async (req, res) => {
   const message = req.body;
 
-  const timestamp = message.timestamp;
+  const submissionTime = message.submissionTime;
   const email = message.email;
   const responses = JSON.parse(message.responses);
 
-  console.info(`Timestamp: ${timestamp}`);
-  console.info(`    Email: ${email}`);
+  console.info(`Submission Time: ${submissionTime}`);
+  console.info(`Email: ${email}`);
 
   // [0] "Create Bucket?"
   // [1] "Bucket Name"
@@ -39,7 +39,7 @@ exports.onFormSubmit = async (req, res) => {
 
     // serialize data
     const data = JSON.stringify({
-      submissionTime: timestamp,
+      submissionTime: submissionTime,
       bucketName: bucketName,
       email: email,
       Q1: Q1,
