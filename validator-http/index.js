@@ -7,18 +7,24 @@ const { Firestore } = require('@google-cloud/firestore');
  * @param {!express:Response} res HTTP response context.
  */
 exports.validator = async (req, res) => {
-  const message = req.body;
-
-  console.log(`Request: ${message}`);
-
-  const bucketName = message.bucketName || 'bucket';
-
-  console.log(`Bucket: ${bucketName}`);
-
-  const firestore = new Firestore();
-  const collection = firestore.collection('bucket');
-
   try {
+    const message = req.body;
+
+    console.log(`Request: ${message}`);
+
+    const bucketName = message.bucketName || 'bucket';
+
+    console.log(`Bucket: ${bucketName}`);
+
+    // create client and get bucket collection
+    const firestore = new Firestore();
+    const collection = firestore.collection('bucket');
+
+    // null check bucketName
+    if (!bucketName) {
+      throw new Error('bucketName must not be blank');
+    }
+
     const documentRef = await collection.doc(bucketName).get();
     const data = documentRef.data();
 
@@ -29,5 +35,5 @@ exports.validator = async (req, res) => {
     console.log(`Error: ${err.message}`);
   }
 
-  res.status(200).send(`Completed!`);
+  res.status(200).send(`Successful run!`);
 };
