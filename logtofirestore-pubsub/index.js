@@ -14,6 +14,11 @@ exports.logToFirestore = async (psMessage) => {
   // extract message vars
   const bucketName = message.bucketName;
 
+  // null check bucketName
+  if (!bucketName) {
+    throw new Error('Error: bucketName must not be blank');
+  }
+
   // create client and get bucket collection
   const firestore = new Firestore();
   const collection = firestore.collection('bucket');
