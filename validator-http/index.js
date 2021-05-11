@@ -10,9 +10,9 @@ exports.validator = async (req, res) => {
   try {
     const message = req.body;
 
-    console.log(`Res: ${Object.keys(res)}`);
     console.log(`Keys: ${Object.values(req)}`);
     console.log(`Body: ${JSON.stringify(message)}`);
+    console.log(message);
 
     const bucketName = message.bucketName || 'bucket';
 
