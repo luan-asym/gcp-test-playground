@@ -29,8 +29,6 @@ exports.sendToTask = async (psMessage) => {
     const client = new CloudTasksClient();
     const parent = client.queuePath(PROJECT, LOCATION, QUEUE);
 
-    console.log(`Email: ${GCP_SA_EMAIL}`);
-
     const task = {
       httpRequest: {
         httpMethod: 'POST',
