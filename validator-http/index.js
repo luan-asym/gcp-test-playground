@@ -1,4 +1,5 @@
 const { Firestore } = require('@google-cloud/firestore');
+const bodyParser = require('body-parser');
 
 /**
  * Validates files based on Firestore log
@@ -12,6 +13,8 @@ exports.validator = async (req, res) => {
 
     console.log(`Keys: ${Object.keys(req)}`);
     console.log(`Body: ${JSON.stringify(message)}`);
+    console.log('body:');
+    console.log(message);
 
     const bucketName = message.bucketName || 'bucket';
 
