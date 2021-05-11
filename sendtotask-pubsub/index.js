@@ -57,7 +57,7 @@ exports.sendToTask = async (psMessage) => {
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
-    const request = { parent, task };
+    const request = { parent, task, responseView: 'FULL' };
     const [response] = await client.createTask(request);
     console.log(`Created Task ${JSON.stringify(response.name)}`);
   } catch (err) {
