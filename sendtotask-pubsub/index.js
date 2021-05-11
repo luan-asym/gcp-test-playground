@@ -34,6 +34,9 @@ exports.sendToTask = async (psMessage) => {
       httpRequest: {
         httpMethod: 'POST',
         url: VALIDATOR_URL,
+        headers: {
+          'Content-Type': 'application/octet-stream',
+        },
         oidcToken: {
           serviceAccountEmail: GCP_SA_EMAIL,
         },
