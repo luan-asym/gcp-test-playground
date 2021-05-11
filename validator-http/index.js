@@ -12,9 +12,16 @@ exports.validator = async (req, res) => {
 
     console.log(`Body: ${JSON.stringify(message)}`);
 
-    const bucketName = message.bucketName || 'bucket';
+    // extract body info
+    const lastUpdateTime = message.lastUpdateTime;
+    const bucketName = message.bucketName;
+    const lastUpdateFile = message.lastUpdateFile;
+    const lastUpdateEvent = message.lastUpdateEvent;
 
+    console.log(`lastUpdateTime: ${lastUpdateTime}`);
     console.log(`Bucket: ${bucketName}`);
+    console.log(`lastUpdateFile: ${lastUpdateFile}`);
+    console.log(`lastUpdateEvent: ${lastUpdateEvent}`);
 
     // create client and get bucket collection
     const firestore = new Firestore();
@@ -33,6 +40,8 @@ exports.validator = async (req, res) => {
     console.log(`DATA: ${JSON.stringify(data)}`);
     console.log(`${bucketName} submissionTime: ${data.submissionTime}`);
     console.log(`Submitted by: ${data.email}`);
+
+    // checks if submission has changed
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
