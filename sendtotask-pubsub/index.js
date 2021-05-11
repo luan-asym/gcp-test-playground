@@ -35,7 +35,7 @@ exports.sendToTask = async (psMessage) => {
         httpMethod: 'POST',
         url: VALIDATOR_URL,
         headers: {
-          'Content-Type': 'application/octet-stream',
+          'Content-Type': 'application/json',
         },
         oidcToken: {
           serviceAccountEmail: GCP_SA_EMAIL,
@@ -52,11 +52,12 @@ exports.sendToTask = async (psMessage) => {
       bucketName: bucketName,
       file: file,
     };
-    task.httpRequest.body = new Uint8Array(
-      JSON.stringify(payload)
-        .split('')
-        .map((char) => char.charCodeAt(0))
-    );
+    task.httpRequest.body = payload;
+    // task.httpRequest.body = new Uint8Array(
+    //   JSON.stringify(payload)
+    //     .split('')
+    //     .map((char) => char.charCodeAt(0))
+    // );
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
