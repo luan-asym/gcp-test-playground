@@ -50,7 +50,6 @@ exports.sendToTask = async (psMessage) => {
     const payload = {
       timestamp: timestamp,
       bucketName: bucketName,
-      file: file,
     };
     task.httpRequest.body = new Uint8Array(
       JSON.stringify(payload)
