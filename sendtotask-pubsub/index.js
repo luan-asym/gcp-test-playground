@@ -39,15 +39,13 @@ exports.sendToTask = async (psMessage) => {
           serviceAccountEmail: GCP_SA_EMAIL,
         },
       },
+      scheduleTime: {
+        seconds: CHECK_INTERVAL + Date.now() / 1000,
+      },
     };
 
     // add payload
     task.httpRequest.body = Buffer.from(bucketName).toString('base64');
-
-    // delay task time
-    task.scheduleTime = {
-      seconds: CHECK_INTERVAL + Date.now() / 1000,
-    };
 
     // create and send task
     console.log(`Sending task: ${task}`);
