@@ -1,5 +1,4 @@
 const { Firestore } = require('@google-cloud/firestore');
-const bodyParser = require('body-parser');
 
 /**
  * Validates files based on Firestore log
