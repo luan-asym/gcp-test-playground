@@ -50,15 +50,11 @@ exports.sendToTask = async (psMessage) => {
       file: file,
     };
 
-    task.httpRequest.body = Buffer.from(JSON.stringify(payload)).toString('base64');
-
-    // const httpRequestUnitArray = new Uint8Array(
-    //   Buffer.from(bucketName)
-    //     .toString('utf-8')
-    //     .split('')
-    //     .map((char) => char.charCodeAt(0))
-    // );
-    // task.httpRequest.body = httpRequestUnitArray;
+    task.httpRequest.body = new Uint8Array(
+      JSON.stringify(payload)
+        .split('')
+        .map((char) => char.charCodeAt(0))
+    );
 
     // create and send task
     console.log(`Sending task: ${task}`);
