@@ -32,6 +32,7 @@ exports.sendToTask = async (psMessage) => {
 
     // create httpRequest task
     const task = {
+      name: bucketName,
       httpRequest: {
         httpMethod: 'POST',
         url: VALIDATOR_URL,
@@ -60,11 +61,18 @@ exports.sendToTask = async (psMessage) => {
         .map((char) => char.charCodeAt(0))
     );
 
+    // check if another task exists
+    const getTaskRequest = { name: bucketName };
+    const [getTaskResponse] = await client.getTask(getTaskRequest);
+
+    console.log('getTaskResponse:');
+    console.log(getTaskResponse);
+
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
-    const request = { parent, task, view: 'FULL' };
-    const [response] = await client.createTask(request);
-    console.log(`Created Task ${JSON.stringify(response.name)}`);
+    const createTaskRequest = { parent, task, view: 'FULL' };
+    const [createTaskResponse] = await client.createTask(createTaskRequest);
+    console.log(`Created Task ${JSON.stringify(createTaskResponse.name)}`);
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
