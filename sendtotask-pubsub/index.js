@@ -29,6 +29,7 @@ exports.sendToTask = async (psMessage) => {
     const client = new CloudTasksClient();
     const parent = client.queuePath(PROJECT, LOCATION, QUEUE);
 
+    // create httpRequest task
     const task = {
       httpRequest: {
         httpMethod: 'POST',
@@ -42,12 +43,12 @@ exports.sendToTask = async (psMessage) => {
       },
     };
 
-    // add payload
+    // create and add body
     const payload = {
+      timestamp: timestamp,
       bucketName: bucketName,
       file: file,
     };
-
     task.httpRequest.body = new Uint8Array(
       JSON.stringify(payload)
         .split('')
@@ -55,7 +56,8 @@ exports.sendToTask = async (psMessage) => {
     );
 
     // create and send task
-    console.log(`Sending task: ${task}`);
+    console.log(`Sending task: ${JSON.stringify(task)}`);
+    console.log(task);
     const request = { parent, task };
     const [response] = await client.createTask(request);
     console.log(`Created Task ${JSON.stringify(response.name)}`);
