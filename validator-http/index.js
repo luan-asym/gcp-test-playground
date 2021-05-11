@@ -8,7 +8,7 @@ const { Firestore } = require('@google-cloud/firestore');
  */
 exports.validator = async (req, res) => {
   try {
-    const message = req.body;
+    const message = Buffer.from(request.rawBody, 'base64').toString('ascii');
 
     console.log(`Keys: ${Object.keys(req)}`);
     console.log(`Body: ${JSON.stringify(message)}`);
