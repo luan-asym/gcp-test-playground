@@ -10,7 +10,7 @@ exports.validator = async (req, res) => {
   try {
     const message = req.body;
 
-    console.log(`Header: ${req.headers}`);
+    console.log(`Header: ${JSON.stringify(req.headers)}`);
     console.log(`rawHeader: ${req.rawHeaders}`);
     console.log(`Keys: ${Object.keys(req)}`);
     console.log(`Body: ${JSON.stringify(message)}`);
