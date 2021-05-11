@@ -21,9 +21,10 @@ exports.sendToTask = async (psMessage) => {
     console.log(`Message: ${JSON.stringify(message)}`);
 
     // extract pubsub message data
-    const timestamp = message.lastUpdateTime;
-    const bucketName = message.bucketName || 'bucket';
-    const file = message.lastUpdateFile;
+    const lastUpdateTime = message.lastUpdateTime;
+    const bucketName = message.bucketName;
+    const lastUpdateFile = message.lastUpdateFile;
+    const lastUpdateEvent = message.lastUpdateEvent;
 
     // create client and construct queue name
     const client = new CloudTasksClient();
@@ -48,8 +49,10 @@ exports.sendToTask = async (psMessage) => {
 
     // create and add body
     const payload = {
-      timestamp: timestamp,
+      lastUpdateTime: lastUpdateTime,
       bucketName: bucketName,
+      lastUpdateFile: lastUpdateFile,
+      lastUpdateEvent: lastUpdateEvent,
     };
     task.httpRequest.body = new Uint8Array(
       JSON.stringify(payload)
