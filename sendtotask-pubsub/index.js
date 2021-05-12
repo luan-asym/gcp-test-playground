@@ -60,7 +60,7 @@ exports.sendToTask = async (psMessage) => {
         .map((char) => char.charCodeAt(0))
     );
 
-    // TODO: check if another task exists
+    // TODO: check if another task exists?
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);

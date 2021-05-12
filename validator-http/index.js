@@ -42,6 +42,7 @@ exports.validator = async (req, res) => {
       lastUpdateFile == data.lastUpdateFile &&
       lastUpdateEvent == data.lastUpdateEvent
     ) {
+      // TODO: add validation script here
       console.log('guess we gotta validate...');
     }
   } catch (err) {
