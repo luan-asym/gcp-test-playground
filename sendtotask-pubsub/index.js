@@ -61,6 +61,7 @@ exports.sendToTask = async (psMessage) => {
     );
 
     // TODO: check if another task exists?
+    // https://googleapis.dev/nodejs/tasks/latest/google.cloud.tasks.v2beta2.CloudTasks.html
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
