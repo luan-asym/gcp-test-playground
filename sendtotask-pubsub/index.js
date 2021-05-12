@@ -16,6 +16,7 @@ const CHECK_INTERVAL = 20 * 60; // 20 minutes
  */
 exports.sendToTask = async (psMessage) => {
   try {
+    console.log(psMessage);
     const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
 
     console.log(`Message: ${JSON.stringify(message)}`);
