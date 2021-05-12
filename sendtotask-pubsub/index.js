@@ -62,8 +62,8 @@ exports.sendToTask = async (psMessage) => {
     );
 
     // check if another task exists
-    const getTaskRequest = { name: bucketName };
-    const [getTaskResponse] = await client.getTask(getTaskRequest);
+    // const getTaskRequest = { name: bucketName };
+    // const [getTaskResponse] = await client.getTask(getTaskRequest);
 
     console.log('getTaskResponse:');
     console.log(getTaskResponse);
