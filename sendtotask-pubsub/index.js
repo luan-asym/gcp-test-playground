@@ -16,7 +16,6 @@ const CHECK_INTERVAL = 20 * 60; // 20 minutes
  */
 exports.sendToTask = async (psMessage) => {
   try {
-    console.log(psMessage);
     const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
 
     console.log(`Message: ${JSON.stringify(message)}`);
@@ -30,11 +29,9 @@ exports.sendToTask = async (psMessage) => {
     // create client and construct queue name
     const client = new CloudTasksClient();
     const parent = client.queuePath(PROJECT, LOCATION, QUEUE);
-    const taskName = `projects/${PROJECT}/locations/${LOCATION}/queues/${QUEUE}/tasks/${bucketName}`;
 
     // create httpRequest task
     const task = {
-      name: taskName,
       httpRequest: {
         httpMethod: 'POST',
         url: VALIDATOR_URL,
@@ -63,12 +60,7 @@ exports.sendToTask = async (psMessage) => {
         .map((char) => char.charCodeAt(0))
     );
 
-    // // check if another task exists
-    // const getTaskRequest = { name: taskName };
-    // const [getTaskResponse] = await client.getTask(getTaskRequest);
-    // console.log(`getTaskResponse: ${getTaskResponse}`);
-
-    // if it does, delete it
+    // TODO: check if another task exists
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
