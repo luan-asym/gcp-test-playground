@@ -29,10 +29,11 @@ exports.sendToTask = async (psMessage) => {
     // create client and construct queue name
     const client = new CloudTasksClient();
     const parent = client.queuePath(PROJECT, LOCATION, QUEUE);
+    const taskName = `projects/${PROJECT}/locations/${LOCATION}/queues/${QUEUE}/tasks/${bucketName}`;
 
     // create httpRequest task
     const task = {
-      name: `projects/${PROJECT}/locations/${LOCATION}/queues/${QUEUE}/tasks/${bucketName}`,
+      name: taskName,
       httpRequest: {
         httpMethod: 'POST',
         url: VALIDATOR_URL,
@@ -62,11 +63,11 @@ exports.sendToTask = async (psMessage) => {
     );
 
     // check if another task exists
-    // const getTaskRequest = { name: bucketName };
-    // const [getTaskResponse] = await client.getTask(getTaskRequest);
+    const getTaskRequest = { name: taskName };
+    const [getTaskResponse] = await client.getTask(getTaskRequest);
 
-    // console.log('getTaskResponse:');
-    // console.log(getTaskResponse);
+    console.log('getTaskResponse:');
+    console.log(getTaskResponse);
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
