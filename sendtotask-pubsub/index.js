@@ -65,8 +65,8 @@ exports.sendToTask = async (psMessage) => {
     // const getTaskRequest = { name: bucketName };
     // const [getTaskResponse] = await client.getTask(getTaskRequest);
 
-    console.log('getTaskResponse:');
-    console.log(getTaskResponse);
+    // console.log('getTaskResponse:');
+    // console.log(getTaskResponse);
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
