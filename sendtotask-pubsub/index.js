@@ -62,12 +62,12 @@ exports.sendToTask = async (psMessage) => {
         .map((char) => char.charCodeAt(0))
     );
 
-    // check if another task exists
-    const getTaskRequest = { name: taskName };
-    const [getTaskResponse] = await client.getTask(getTaskRequest);
+    // // check if another task exists
+    // const getTaskRequest = { name: taskName };
+    // const [getTaskResponse] = await client.getTask(getTaskRequest);
+    // console.log(`getTaskResponse: ${getTaskResponse}`);
 
-    console.log('getTaskResponse:');
-    console.log(getTaskResponse);
+    // if it does, delete it
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(task)}`);
