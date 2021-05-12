@@ -32,7 +32,7 @@ exports.sendToTask = async (psMessage) => {
 
     // create httpRequest task
     const task = {
-      name: bucketName,
+      name: `projects/${PROJECT}/locations/${LOCATION}/queues/${QUEUE}/tasks/${bucketName}`,
       httpRequest: {
         httpMethod: 'POST',
         url: VALIDATOR_URL,
