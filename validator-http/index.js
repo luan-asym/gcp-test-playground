@@ -13,10 +13,10 @@ exports.validator = async (req, res) => {
     console.log(`Body: ${JSON.stringify(message)}`);
 
     // extract body info
-    const lastUpdateTime = message.lastUpdateTime;
+    const updateTime = message.updateTime;
     const bucketName = message.bucketName;
-    const lastUpdateFile = message.lastUpdateFile;
-    const lastUpdateEvent = message.lastUpdateEvent;
+
+    console.log(`${bucketName} updateTime: ${updateTime}`);
 
     // create client and get bucket collection
     const firestore = new Firestore();
@@ -36,15 +36,7 @@ exports.validator = async (req, res) => {
     console.log(`${bucketName} submissionTime: ${data.submissionTime}`);
     console.log(`Submitted by: ${data.email}`);
 
-    // check if changes have been made since task creation
-    if (
-      lastUpdateTime == data.lastUpdateTime &&
-      lastUpdateFile == data.lastUpdateFile &&
-      lastUpdateEvent == data.lastUpdateEvent
-    ) {
-      // TODO: add validation script here
-      console.log('guess we gotta validate...');
-    }
+    // TODO: check if changes have been made since task creation
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }
