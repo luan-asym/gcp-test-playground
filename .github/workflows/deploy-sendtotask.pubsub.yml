@@ -1,9 +1,6 @@
 name: Deploy sendToTask
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 env:
   GITHUB_SHA: ${{ github.sha }}
@@ -32,7 +29,8 @@ jobs:
           GCP_SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
         run: |
           gcloud functions deploy sendToTask \
-            --trigger-topic task-request \
+            --trigger-events providers/cloud.firestore/eventTypes/document.update \
+            --trigger-resource "projects/$PROJECT_ID/databases/(default)/documents/buckets/{bucketName}"
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB \
