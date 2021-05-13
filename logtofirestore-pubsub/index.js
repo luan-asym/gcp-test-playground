@@ -24,7 +24,7 @@ exports.logToFirestore = async (psMessage) => {
       throw new Error('bucketName must not be blank');
     }
 
-    // add firestore entry with form answers
+    // add firestore entry with pubsub message
     const document = await collection.doc(bucketName).set(message, { merge: true });
     console.log(`Document written at: ${document.writeTime.toDate()}`);
   } catch (err) {
