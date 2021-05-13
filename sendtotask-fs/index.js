@@ -11,12 +11,11 @@ const CHECK_INTERVAL = 20 * 60; // 20 minutes
 /**
  * Sends tasks to tasker
  *
- * @param {object} message The Pub/Sub message.
- * @param {object} context The event metadata.
+ * @param {!Object} event The Cloud Functions event.
  */
-exports.sendToTask = async (psMessage) => {
+exports.sendToTask = async (event) => {
   try {
-    const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
+    const message = event;
 
     console.log(`Message: ${JSON.stringify(message)}`);
 

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: sendtotask-pubsub
+        working-directory: sendtotask-fs
 
     steps:
       - uses: actions/checkout@v2
@@ -30,7 +30,7 @@ jobs:
         run: |
           gcloud functions deploy sendToTask \
             --trigger-event providers/cloud.firestore/eventTypes/document.update \
-            --trigger-resource "projects/$PROJECT_ID/databases/(default)/documents/bucket/{bucketName}" \
+            --trigger-resource "projects/$PROJECT_ID/databases/(default)/documents/bucket-status/{bucketName}" \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB \
