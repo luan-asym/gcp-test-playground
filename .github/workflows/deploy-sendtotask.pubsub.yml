@@ -29,7 +29,7 @@ jobs:
           GCP_SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
         run: |
           gcloud functions deploy sendToTask \
-            --trigger-events providers/cloud.firestore/eventTypes/document.update \
+            --trigger-event providers/cloud.firestore/eventTypes/document.update \
             --trigger-resource "projects/$PROJECT_ID/databases/(default)/documents/buckets/{bucketName}"
             --region=us-east4 \
             --runtime=nodejs12 \
