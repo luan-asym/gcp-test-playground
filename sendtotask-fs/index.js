@@ -15,15 +15,13 @@ const CHECK_INTERVAL = 20 * 60; // 20 minutes
  */
 exports.sendToTask = async (event) => {
   try {
-    const message = event;
+    const message = event.value;
 
     console.log(`Message: ${JSON.stringify(message)}`);
 
-    // extract pubsub message data
-    const lastUpdateTime = message.lastUpdateTime;
+    // extract trigger message data
+    const updateTime = message.updateTime;
     const bucketName = message.bucketName;
-    const lastUpdateFile = message.lastUpdateFile;
-    const lastUpdateEvent = message.lastUpdateEvent;
 
     // create client and construct queue name
     const client = new CloudTasksClient();
@@ -48,10 +46,8 @@ exports.sendToTask = async (event) => {
 
     // create and add body
     const payload = {
-      lastUpdateTime: lastUpdateTime,
+      updateTime: updateTime,
       bucketName: bucketName,
-      lastUpdateFile: lastUpdateFile,
-      lastUpdateEvent: lastUpdateEvent,
     };
     task.httpRequest.body = new Uint8Array(
       JSON.stringify(payload)
