@@ -67,7 +67,7 @@ exports.sendToTask = async (event) => {
 
     // https://googleapis.dev/nodejs/tasks/latest/google.cloud.tasks.v2beta2.CloudTasks.html
     // avoid duplicate tasks
-    deleteExistingTask(bucketName);
+    await deleteExistingTask(bucketName);
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(validatorTask)}`);
@@ -77,7 +77,7 @@ exports.sendToTask = async (event) => {
     console.log(`Created Task ${JSON.stringify(taskName)}`);
 
     // add taskName to firestore
-    logTaskName(newTaskName);
+    await logTaskName(newTaskName);
   } catch (err) {
     console.error(`Error: ${err.message}`);
     return;
@@ -122,6 +122,8 @@ const deleteExistingTask = async (bucketName) => {
   } catch (err) {
     console.error(`deleteExistingTask Error: ${err.message}`);
   }
+
+  return deleteTaskResponse;
 };
 
 /**
@@ -146,4 +148,6 @@ const logTaskName = async (newTaskName) => {
   } catch (err) {
     console.error(`logTaskName Error: ${err.message}`);
   }
+
+  return firestoreLogMessageId;
 };
