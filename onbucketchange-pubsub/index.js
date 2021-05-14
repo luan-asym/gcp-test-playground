@@ -34,9 +34,7 @@ exports.onBucketChange = async (psMessage) => {
 
     // update firestore entry with event data
     const pubSubClient = new PubSub();
-
     const firestoreLogMessageId = await pubSubClient.topic(FIRESTORE_LOG_TOPIC).publish(dataBuffer);
-
     console.log(`MessageID: ${firestoreLogMessageId}, ${taskRequestMessageId} published!`);
   } catch (err) {
     console.error(new Error(`Error: ${err.message}`));
