@@ -25,13 +25,13 @@ let pubSubClient;
  */
 exports.sendToTask = async (event) => {
   try {
-    const message = event.value;
+    const message = event.value.fields;
 
     console.log(`Message: ${JSON.stringify(message)}`);
 
     // extract trigger message data
-    const updateTime = message.updateTime;
-    const bucketName = message.bucketName || 'bucket';
+    const updateTime = message.updateTime.stringValue;
+    const bucketName = message.bucketName.stringValue;
 
     // create client and construct queue name
     cloudTaskClient = new CloudTasksClient();
