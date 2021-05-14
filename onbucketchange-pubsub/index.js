@@ -1,7 +1,7 @@
 const { PubSub } = require('@google-cloud/pubsub');
 
 const FIRESTORE_LOG_TOPIC = 'firestore-log';
-const TASK_REQUEST_TOPIC = 'task-request';
+const FIRESTORE_COLLECTION = 'bucket-status';
 
 /**
  * Trigger for when bucket changes
@@ -24,6 +24,7 @@ exports.onBucketChange = async (psMessage) => {
 
     // serialize data
     const data = JSON.stringify({
+      collectionName: FIRESTORE_COLLECTION,
       bucketName: bucketName,
       lastUpdateEvent: event,
       lastUpdateFile: file,
@@ -38,7 +39,7 @@ exports.onBucketChange = async (psMessage) => {
 
     console.log(`MessageID: ${firestoreLogMessageId}, ${taskRequestMessageId} published!`);
   } catch (err) {
-    console.log(`Error: ${err.message}`);
+    console.error(new Error(`Error: ${err.message}`));
   }
 
   console.log(`Successful run!`);

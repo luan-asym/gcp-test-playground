@@ -13,22 +13,26 @@ exports.logToFirestore = async (psMessage) => {
     console.log(`Message: ${JSON.stringify(message)}`);
 
     // extract message vars
+    const collectionName = message.collectionName;
     const bucketName = message.bucketName;
 
     // create client and get bucket collection
     const firestore = new Firestore();
-    const collection = firestore.collection('bucket');
+    const collection = firestore.collection(collectionName);
 
     // null check bucketName
     if (!bucketName) {
       throw new Error('bucketName must not be blank');
     }
+    if (!collection) {
+      throw new Error('collection must not be blank');
+    }
 
     // add firestore entry with pubsub message
     const document = await collection.doc(bucketName).set(message, { merge: true });
-    console.log(`Document written at: ${document.writeTime.toDate()}`);
+    console.log(`Document written to ${collectionName}: ${document.writeTime.toDate()}`);
   } catch (err) {
-    console.log(`Error: ${err.message}`);
+    console.error(new Error(`Error: ${err.message}`));
   }
 
   console.log(`Successful run!`);

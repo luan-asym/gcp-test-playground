@@ -2,6 +2,7 @@ const { PubSub } = require('@google-cloud/pubsub');
 
 const BUCKET_REQUEST_TOPIC = 'bucket-request';
 const FIRESTORE_LOG_TOPIC = 'firestore-log';
+const FIRESTORE_COLLECTION = 'bucket-answers';
 
 /**
  * Processes Google Form Submission
@@ -37,6 +38,7 @@ exports.onFormSubmit = async (req, res) => {
   if (createBucket === 'True') {
     // serialize data
     const data = JSON.stringify({
+      collectionName: FIRESTORE_COLLECTION,
       submissionTime: submissionTime,
       bucketName: bucketName,
       email: email,
@@ -61,6 +63,7 @@ exports.onFormSubmit = async (req, res) => {
         .status(200)
         .send(`MessageID: ${bucketRequestMessageId}, ${firestoreLogMessageId} published!`);
     } catch (err) {
+      console.error(new Error(`Error: ${err.message}`));
       res.status(400).send(`Error: ${err.message}`);
     }
   } else {
