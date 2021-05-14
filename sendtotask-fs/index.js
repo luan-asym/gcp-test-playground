@@ -107,7 +107,6 @@ const deleteExistingTask = async (bucketName) => {
     // prints out data of bucket
     console.log(`DATA: ${JSON.stringify(data)}`);
     console.log(`${bucketName} is ${taskStatus} on task: ${existingTaskName}`);
-    createFireStoreLog(taskName);
 
     // removes task in queue
     if (taskStatus && taskStatus == PENDING_TASK_STATUS) {
@@ -136,7 +135,7 @@ const logTaskName = async (newTaskName) => {
     // serialize data for PubSub
     const pubSubData = JSON.stringify({
       collectionName: FIRESTORE_COLLECTION,
-      taskName: taskName,
+      taskName: newTaskName,
       taskStatus: PENDING_TASK_STATUS,
     });
     const dataBuffer = Buffer.from(pubSubData);
