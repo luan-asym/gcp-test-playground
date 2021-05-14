@@ -33,6 +33,7 @@ exports.logToFirestore = async (psMessage) => {
     console.log(`Document written to ${collectionName}: ${document.writeTime.toDate()}`);
   } catch (err) {
     console.error(new Error(`Error: ${err.message}`));
+    return;
   }
 
   console.log(`Successful run!`);

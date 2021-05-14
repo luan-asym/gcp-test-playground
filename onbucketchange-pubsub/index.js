@@ -40,6 +40,7 @@ exports.onBucketChange = async (psMessage) => {
     console.log(`MessageID: ${firestoreLogMessageId}, ${taskRequestMessageId} published!`);
   } catch (err) {
     console.error(new Error(`Error: ${err.message}`));
+    return;
   }
 
   console.log(`Successful run!`);
