@@ -14,10 +14,6 @@ const FIRESTORE_LOG_TOPIC = 'firestore-log';
 const FIRESTORE_COLLECTION = 'bucket-status';
 const PENDING_TASK_STATUS = 'PENDING';
 
-// lazy globals
-let bucketName = 'bucket';
-let updateTime;
-
 // cloud clients
 let cloudTaskClient;
 let pubSubClient;
@@ -34,8 +30,8 @@ exports.sendToTask = async (event) => {
     console.log(`Message: ${JSON.stringify(message)}`);
 
     // extract trigger message data
-    updateTime = message.updateTime;
-    bucketName = message.bucketName;
+    const updateTime = message.updateTime;
+    const bucketName = message.bucketName || 'bucket';
 
     // create client and construct queue name
     cloudTaskClient = new CloudTasksClient();
@@ -71,7 +67,7 @@ exports.sendToTask = async (event) => {
 
     // https://googleapis.dev/nodejs/tasks/latest/google.cloud.tasks.v2beta2.CloudTasks.html
     // avoid duplicate tasks
-    deleteExistingTask();
+    deleteExistingTask(bucketName);
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(validatorTask)}`);
@@ -94,9 +90,9 @@ exports.sendToTask = async (event) => {
  * Checks if another task exists for the same bucket
  * If so, delete that task
  *
- * @param {!Object} none none
+ * @param {!Object} bucketName The name of the bucket
  */
-const deleteExistingTask = async () => {
+const deleteExistingTask = async (bucketName) => {
   try {
     // create client and get bucket data
     const firestore = new Firestore();
