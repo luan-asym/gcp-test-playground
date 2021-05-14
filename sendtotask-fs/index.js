@@ -25,7 +25,7 @@ let pubSubClient;
  */
 exports.sendToTask = async (event) => {
   try {
-    const message = JSON.parse(event.value.fields);
+    const message = JSON.parse(JSON.stringify(event.value.fields));
 
     console.log(`Message: ${JSON.stringify(message)}`);
 
