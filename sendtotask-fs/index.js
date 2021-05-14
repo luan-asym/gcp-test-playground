@@ -75,7 +75,7 @@ exports.sendToTask = async (event) => {
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(validatorTask)}`);
-    const createTaskRequest = { parent, task, view: 'FULL' };
+    const createTaskRequest = { parent, validatorTask, view: 'FULL' };
     const [createTaskResponse] = await cloudTaskClient.createTask(createTaskRequest);
     const newTaskName = createTaskResponse.name;
     console.log(`Created Task ${JSON.stringify(taskName)}`);
@@ -105,7 +105,6 @@ const deleteExistingTask = async () => {
     const data = documentRef.data();
 
     // extract data from firestore doc
-    const bucketName = data.bucketName;
     const taskStatus = data.taskStatus;
     const existingTaskName = data.taskName;
 
@@ -125,7 +124,7 @@ const deleteExistingTask = async () => {
       console.log(deleteTaskResponse);
     }
   } catch (err) {
-    console.error(`checkForExistingTask Error: ${err.message}`);
+    console.error(`deleteExistingTask Error: ${err.message}`);
   }
 };
 
@@ -149,6 +148,6 @@ const logTaskName = async (newTaskName) => {
     const firestoreLogMessageId = await pubSubClient.topic(FIRESTORE_LOG_TOPIC).publish(dataBuffer);
     console.log(`MessageID: ${firestoreLogMessageId} published!`);
   } catch (err) {
-    console.error(`createFireStoreLog Error: ${err.message}`);
+    console.error(`logTaskName Error: ${err.message}`);
   }
 };
