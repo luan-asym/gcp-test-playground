@@ -1,6 +1,7 @@
 name: Deploy sendToTask
 
-on: push
+on:
+  push:
 
 env:
   GITHUB_SHA: ${{ github.sha }}
