@@ -96,7 +96,7 @@ exports.sendToTask = async (event) => {
  *
  * @param {!Object} none none
  */
-const deleteExistingTask = () => {
+const deleteExistingTask = async () => {
   try {
     // create client and get bucket data
     const firestore = new Firestore();
@@ -134,7 +134,7 @@ const deleteExistingTask = () => {
  *
  * @param {string} newTaskName The name of the new task
  */
-const logTaskName = (newTaskName) => {
+const logTaskName = async (newTaskName) => {
   try {
     // serialize data for PubSub
     const pubSubData = JSON.stringify({
