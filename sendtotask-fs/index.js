@@ -94,15 +94,11 @@ exports.sendToTask = async (event) => {
  */
 const deleteExistingTask = async (bucketName) => {
   try {
-    console.info(bucketName);
-
     // create client and get bucket data
     const firestore = new Firestore();
     const collection = firestore.collection(FIRESTORE_COLLECTION);
     const documentRef = await collection.doc(bucketName).get();
     const data = documentRef.data();
-
-    console.log(`DATA: ${JSON.stringify(data)}`);
 
     // extract data from firestore doc
     const taskStatus = data.taskStatus;
@@ -114,7 +110,7 @@ const deleteExistingTask = async (bucketName) => {
     createFireStoreLog(taskName);
 
     // removes task in queue
-    if (taskStatus == PENDING_TASK_STATUS) {
+    if (taskStatus && taskStatus == PENDING_TASK_STATUS) {
       const deleteTaskRequest = {
         name: existingTaskName,
       };
