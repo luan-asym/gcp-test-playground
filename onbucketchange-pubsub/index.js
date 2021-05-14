@@ -22,15 +22,15 @@ exports.onBucketChange = async (psMessage) => {
     const bucketName = attributes.bucketId;
     const file = attributes.objectId;
 
-    // serialize data
-    const data = JSON.stringify({
+    // serialize data for PubSub
+    const pubsubData = JSON.stringify({
       collectionName: FIRESTORE_COLLECTION,
       bucketName: bucketName,
       lastUpdateEvent: event,
       lastUpdateFile: file,
       lastUpdateTime: timestamp,
     });
-    const dataBuffer = Buffer.from(data);
+    const dataBuffer = Buffer.from(pubsubData);
 
     // update firestore entry with event data
     const pubSubClient = new PubSub();
