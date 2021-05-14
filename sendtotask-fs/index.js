@@ -25,12 +25,12 @@ let pubSubClient;
  */
 exports.sendToTask = async (event) => {
   try {
-    const message = JSON.parse(JSON.stringify(event.value.fields));
+    const message = event.value.fields;
 
     console.log(`Message: ${JSON.stringify(message)}`);
 
     // extract trigger message data
-    const updateTime = message.updateTime.stringValue;
+    const lastUpdateTime = message.lastUpdateTime.stringValue;
     const bucketName = message.bucketName.stringValue;
 
     // create client and construct queue name
@@ -56,7 +56,7 @@ exports.sendToTask = async (event) => {
 
     // create and add body
     const payload = {
-      updateTime: updateTime,
+      lastUpdateTime: lastUpdateTime,
       bucketName: bucketName,
     };
     validatorTask.httpRequest.body = new Uint8Array(
