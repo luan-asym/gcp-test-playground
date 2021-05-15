@@ -121,8 +121,6 @@ const deleteExistingTask = async (bucketName) => {
   } catch (err) {
     console.error(`deleteExistingTask Error: ${err.message}`);
   }
-
-  return deleteTaskResponse;
 };
 
 /**
@@ -147,6 +145,4 @@ const logTaskName = async (newTaskName) => {
   } catch (err) {
     console.error(`logTaskName Error: ${err.message}`);
   }
-
-  return firestoreLogMessageId;
 };
