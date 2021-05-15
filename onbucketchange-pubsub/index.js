@@ -1,7 +1,7 @@
 const { PubSub } = require('@google-cloud/pubsub');
 
 const FIRESTORE_LOG_TOPIC = 'firestore-log';
-const FIRESTORE_COLLECTION = 'bucket-status';
+const FIRESTORE_COLLECTION = 'bucket-answers';
 
 /**
  * Trigger for when bucket changes
