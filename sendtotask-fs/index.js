@@ -14,6 +14,9 @@ const FIRESTORE_LOG_TOPIC = 'firestore-log';
 const FIRESTORE_COLLECTION = 'bucket-status';
 const PENDING_TASK_STATUS = 'PENDING';
 
+// lazy globals
+let bucketName;
+
 // cloud clients
 let cloudTaskClient;
 let pubSubClient;
@@ -31,7 +34,7 @@ exports.sendToTask = async (event) => {
 
     // extract trigger message data
     const lastUpdateTime = message.lastUpdateTime.stringValue;
-    const bucketName = message.bucketName.stringValue;
+    bucketName = message.bucketName.stringValue;
 
     // create client and construct queue name
     cloudTaskClient = new CloudTasksClient();
@@ -133,6 +136,7 @@ const logTaskName = async (newTaskName) => {
     // serialize data for PubSub
     const pubSubData = JSON.stringify({
       collectionName: FIRESTORE_COLLECTION,
+      bucketName: bucketName,
       taskName: newTaskName,
       taskStatus: PENDING_TASK_STATUS,
     });
