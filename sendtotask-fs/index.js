@@ -74,7 +74,7 @@ exports.sendToTask = async (event) => {
     const createTaskRequest = { parent, task: validatorTask, view: 'FULL' };
     const [createTaskResponse] = await cloudTaskClient.createTask(createTaskRequest);
     const newTaskName = createTaskResponse.name;
-    console.log(`Created Task ${JSON.stringify(taskName)}`);
+    console.log(`Created Task ${JSON.stringify(newTaskName)}`);
 
     // add taskName to firestore
     await logTaskName(newTaskName);
