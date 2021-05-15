@@ -71,7 +71,7 @@ exports.sendToTask = async (event) => {
 
     // create and send task
     console.log(`Sending task: ${JSON.stringify(validatorTask)}`);
-    const createTaskRequest = { parent, validatorTask, view: 'FULL' };
+    const createTaskRequest = { parent, task: validatorTask, view: 'FULL' };
     const [createTaskResponse] = await cloudTaskClient.createTask(createTaskRequest);
     const newTaskName = createTaskResponse.name;
     console.log(`Created Task ${JSON.stringify(taskName)}`);
