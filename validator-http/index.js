@@ -1,4 +1,5 @@
 const { Firestore } = require('@google-cloud/firestore');
+const { PubSub } = require('@google-cloud/pubsub');
 
 const FIRESTORE_LOG_TOPIC = 'firestore-log';
 const FIRESTORE_ANSWERS_COLLECTION = 'bucket-answers';
