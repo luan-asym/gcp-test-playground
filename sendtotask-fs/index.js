@@ -116,7 +116,7 @@ const deleteExistingTask = async (bucketName) => {
     console.log(`${bucketName} is ${taskStatus} on task: ${existingTaskName}`);
 
     // removes task in queue
-    if (!taskStatus && taskStatus == PENDING_TASK_STATUS) {
+    if (taskStatus && taskStatus == PENDING_TASK_STATUS) {
       const deleteTaskRequest = {
         name: existingTaskName,
       };
