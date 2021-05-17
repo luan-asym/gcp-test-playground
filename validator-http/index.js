@@ -25,7 +25,7 @@ exports.validator = async (req, res) => {
     // extract body info
     const lastUpdateTime = message.lastUpdateTime;
     const lastUpdateFile = message.lastUpdateFile;
-    const email = message.lastUpdateFile;
+    const email = message.email;
     const bucketName = message.bucketName;
 
     console.log(`${lastUpdateTime} ${bucketName}: ${email} updated ${lastUpdateFile}`);

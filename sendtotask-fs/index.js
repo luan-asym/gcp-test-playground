@@ -35,7 +35,7 @@ exports.sendToTask = async (event) => {
     // extract trigger message data
     const lastUpdateTime = message.lastUpdateTime.stringValue;
     const lastUpdateFile = message.lastUpdateFile.stringValue;
-    const email = message.lastUpdateFile.stringValue;
+    const email = message.email.stringValue;
     bucketName = message.bucketName.stringValue;
 
     // create client and construct queue name
@@ -122,8 +122,7 @@ const deleteExistingTask = async (bucketName) => {
       };
 
       const [deleteTaskResponse] = await cloudTaskClient.deleteTask(deleteTaskRequest);
-      console.log(`deleteTaskResponse:`);
-      console.log(deleteTaskResponse);
+      console.log(`Task was deleted! ${deleteTaskResponse}`);
     }
   } catch (err) {
     console.error(`deleteExistingTask Error: ${err.message}`);
