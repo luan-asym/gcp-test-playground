@@ -51,6 +51,7 @@ exports.validator = async (req, res) => {
     // logs that the files are validated
     // serialize data for PubSub
     const pubSubData = JSON.stringify({
+      bucketName: bucketName,
       collectionName: FIRESTORE_STATUS_COLLECTION,
       taskName: '',
       taskStatus: COMPLETED_TASK_STATUS,
