@@ -34,6 +34,8 @@ exports.sendToTask = async (event) => {
 
     // extract trigger message data
     const lastUpdateTime = message.lastUpdateTime.stringValue;
+    const lastUpdateFile = message.lastUpdateFile.stringValue;
+    const email = message.lastUpdateFile.stringValue;
     bucketName = message.bucketName.stringValue;
 
     // create client and construct queue name
@@ -60,6 +62,8 @@ exports.sendToTask = async (event) => {
     // create and add body
     const payload = {
       lastUpdateTime: lastUpdateTime,
+      lastUpdateFile: lastUpdateFile,
+      email: email,
       bucketName: bucketName,
     };
     validatorTask.httpRequest.body = new Uint8Array(
@@ -108,7 +112,7 @@ const deleteExistingTask = async (bucketName) => {
     const existingTaskName = data.taskName;
 
     // prints out data of bucket
-    console.log(`DATA: ${JSON.stringify(data)}`);
+    console.log(`deleteExistingTask DATA: ${JSON.stringify(data)}`);
     console.log(`${bucketName} is ${taskStatus} on task: ${existingTaskName}`);
 
     // removes task in queue

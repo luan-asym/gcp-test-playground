@@ -24,9 +24,11 @@ exports.validator = async (req, res) => {
 
     // extract body info
     const lastUpdateTime = message.lastUpdateTime;
+    const lastUpdateFile = message.lastUpdateFile;
+    const email = message.lastUpdateFile;
     const bucketName = message.bucketName;
 
-    console.log(`${bucketName} lastUpdateTime: ${lastUpdateTime}`);
+    console.log(`${lastUpdateTime} ${bucketName}: ${email} updated ${lastUpdateFile}`);
 
     // create client and get answers
     firestore = new Firestore();
