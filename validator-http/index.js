@@ -23,10 +23,10 @@ exports.validator = async (req, res) => {
     console.log(`Body: ${JSON.stringify(message)}`);
 
     // extract body info
-    const updateTime = message.updateTime;
+    const lastUpdateTime = message.lastUpdateTime;
     const bucketName = message.bucketName;
 
-    console.log(`${bucketName} updateTime: ${updateTime}`);
+    console.log(`${bucketName} lastUpdateTime: ${lastUpdateTime}`);
 
     // create client and get answers
     firestore = new Firestore();
