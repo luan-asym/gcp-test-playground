@@ -22,15 +22,15 @@ exports.logToFirestore = async (psMessage) => {
 
     // null check bucketName
     if (!bucketName) {
-      throw new Error('bucketName must not be blank');
+      throw new Error(`bucketName must not be blank`);
     }
     if (!collection) {
-      throw new Error('collection must not be blank');
+      throw new Error(`cannot find collection for ${collectionName}`);
     }
 
     // add firestore entry with pubsub message
     const document = await collection.doc(bucketName).set(message, { merge: true });
-    console.log(`Document written to ${collectionName}: ${document.writeTime.toDate()}`);
+    console.log(`${document.writeTime.toDate()}: Document written to ${collectionName}`);
   } catch (err) {
     console.error(new Error(`Error: ${err.message}`));
     return;
