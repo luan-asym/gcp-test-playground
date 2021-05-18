@@ -113,10 +113,12 @@ const deleteExistingTask = async (bucketName) => {
 
     // prints out data of bucket
     console.log(`deleteExistingTask DATA: ${JSON.stringify(data)}`);
-    console.log(`${bucketName} has ${taskStatus} tasks${taskName ? ` : ${taskName}` : `!`}`);
+    console.log(
+      `${bucketName} has ${taskStatus} tasks${existingTaskName ? ` : ${existingTaskName}` : `!`}`
+    );
 
     // removes task in queue
-    if (taskName && taskStatus == PENDING_TASK_STATUS) {
+    if (existingTaskName && taskStatus == PENDING_TASK_STATUS) {
       const deleteTaskRequest = {
         name: existingTaskName,
       };
