@@ -123,8 +123,8 @@ const deleteExistingTask = async (bucketName) => {
         name: existingTaskName,
       };
 
-      const [deleteTaskResponse] = await cloudTaskClient.deleteTask(deleteTaskRequest);
-      console.log(`Task was deleted! ${deleteTaskResponse}`);
+      await cloudTaskClient.deleteTask(deleteTaskRequest);
+      console.log(`Task was deleted!`);
     }
   } catch (err) {
     console.error(`deleteExistingTask Error: ${err.message}`);
