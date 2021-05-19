@@ -130,6 +130,7 @@ const deleteExistingTask = async (bucketName) => {
     }
   } catch (err) {
     console.error(`deleteExistingTask Error: ${err.message}`);
+    console.error(`No task was deleted..`);
   }
 };
 
