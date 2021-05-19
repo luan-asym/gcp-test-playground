@@ -31,9 +31,10 @@ exports.validator = async (req, res) => {
 
     console.log(`${lastUpdateTime} ${bucketName}: ${email} updated ${lastUpdateFile}`);
 
-    // create client and get answers
+    // create client and get collections
     firestore = new Firestore();
-    const collection = firestore.collection(FIRESTORE_ANSWERS_COLLECTION);
+    const answersCollection = firestore.collection(FIRESTORE_ANSWERS_COLLECTION);
+    const statusCollection = firestore.collection(FIRESTORE_STATUS_COLLECTION);
 
     // null check bucketName
     if (!bucketName) {
@@ -41,25 +42,19 @@ exports.validator = async (req, res) => {
     }
 
     // check firestore entry with form answers
-    const documentRef = await collection.doc(bucketName).get();
-    const data = documentRef.data();
+    const answersDocRef = await answersCollection.doc(bucketName).get();
+    const answersData = answersDocRef.data();
+    console.log(`DATA (answers): ${JSON.stringify(answersData)}`);
 
-    // prints out data of bucket
-    console.log(`DATA: ${JSON.stringify(data)}`);
-    console.log(`${bucketName} submissionTime: ${data.submissionTime}`);
-    console.log(`Submitted by: ${data.email}`);
+    // check firestore entry with status
+    const statusDocRef = await statusCollection.doc(bucketName).get();
+    const statusData = statusDocRef.data();
+    console.log(`DATA (status): ${JSON.stringify(statusData)}`);
 
-    // if event data does not match,
-    // do not perform validation
-    console.log(`comparing lastUpdateTime: ${lastUpdateTime} == ${data.lastUpdateTime}`);
-    console.log(`comparing lastUpdateFile: ${lastUpdateFile} == ${data.lastUpdateFile}`);
-    console.log(`comparing lastUpdateTime: ${lastUpdateEvent} == ${data.lastUpdateEvent}`);
-    if (
-      lastUpdateTime != data.lastUpdateTime ||
-      lastUpdateFile != data.lastUpdateFile ||
-      lastUpdateEvent != data.lastUpdateEvent
-    ) {
-      throw new Error('Task is not most recent task');
+    // check for firestore status logging
+    // if not, do not validate
+    if (statusData.taskStatus == COMPLETED_TASK_STATUS) {
+      throw new Error('Pending tasks were already completed');
     }
 
     // logs that the files are validated
