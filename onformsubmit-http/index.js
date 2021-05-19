@@ -63,7 +63,7 @@ exports.onFormSubmit = async (req, res) => {
         .status(200)
         .send(`MessageID: ${bucketRequestMessageId}, ${firestoreLogMessageId} published!`);
     } catch (err) {
-      console.error(new Error(`Error: ${err.message}`));
+      res.status(400).send(`Error: ${err.message}`);
     }
   } else {
     res.status(200).send('Answers logged');

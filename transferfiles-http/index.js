@@ -80,7 +80,7 @@ exports.transferFiles = async (req, res) => {
       }
     }
   } catch (err) {
-    console.error(new Error(`Error: ${err.message}`));
+    res.status(400).send(`Error: ${err.message}`);
   }
 
   res
