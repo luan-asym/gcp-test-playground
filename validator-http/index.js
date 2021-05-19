@@ -46,7 +46,6 @@ exports.validator = async (req, res) => {
 
     // prints out data of bucket
     console.log(`DATA: ${JSON.stringify(data)}`);
-    console.log(`taskName: ${data.taskName}`);
     console.log(`${bucketName} submissionTime: ${data.submissionTime}`);
     console.log(`Submitted by: ${data.email}`);
 
@@ -79,7 +78,6 @@ exports.validator = async (req, res) => {
     console.log(`MessageID: ${firestoreLogMessageId} published!`);
   } catch (err) {
     console.error(new Error(`Error: ${err.message}`));
-    res.status(400).send(`Error: ${err.message}`);
   }
 
   res.status(200).send(`Successful run!`);
