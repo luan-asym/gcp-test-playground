@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: transferFiles-http
+        working-directory: transferfiles-http
 
     steps:
       - uses: actions/checkout@v2
