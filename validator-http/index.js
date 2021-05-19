@@ -73,6 +73,7 @@ exports.validator = async (req, res) => {
     console.log(`MessageID: ${firestoreLogMessageId} published!`);
   } catch (err) {
     res.status(400).send(`Error: ${err.message}`);
+    return;
   }
 
   res.status(200).send(`Successful run!`);
