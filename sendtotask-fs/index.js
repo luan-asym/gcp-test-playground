@@ -35,6 +35,7 @@ exports.sendToTask = async (event) => {
     // extract trigger message data
     const lastUpdateTime = message.lastUpdateTime.stringValue;
     const lastUpdateFile = message.lastUpdateFile.stringValue;
+    const lastUpdateEvent = message.lastUpdateEvent.stringValue;
     const email = message.email.stringValue;
     bucketName = message.bucketName.stringValue;
 
@@ -63,6 +64,7 @@ exports.sendToTask = async (event) => {
     const payload = {
       lastUpdateTime: lastUpdateTime,
       lastUpdateFile: lastUpdateFile,
+      lastUpdateEvent: lastUpdateEvent,
       email: email,
       bucketName: bucketName,
     };

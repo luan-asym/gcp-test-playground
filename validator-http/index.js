@@ -25,6 +25,7 @@ exports.validator = async (req, res) => {
     // extract body info
     const lastUpdateTime = message.lastUpdateTime;
     const lastUpdateFile = message.lastUpdateFile;
+    const lastUpdateEvent = message.lastUpdateEvent;
     const email = message.email;
     const bucketName = message.bucketName;
 
@@ -45,8 +46,22 @@ exports.validator = async (req, res) => {
 
     // prints out data of bucket
     console.log(`DATA: ${JSON.stringify(data)}`);
+    console.log(`taskName: ${data.taskName}`);
     console.log(`${bucketName} submissionTime: ${data.submissionTime}`);
     console.log(`Submitted by: ${data.email}`);
+
+    // if event data does not match,
+    // do not perform validation
+    console.log(`comparing lastUpdateTime: ${lastUpdateTime} == ${data.lastUpdateTime}`);
+    console.log(`comparing lastUpdateFile: ${lastUpdateFile} == ${data.lastUpdateFile}`);
+    console.log(`comparing lastUpdateTime: ${lastUpdateEvent} == ${data.lastUpdateEvent}`);
+    if (
+      lastUpdateTime != data.lastUpdateTime ||
+      lastUpdateFile != data.lastUpdateFile ||
+      lastUpdateEvent != data.lastUpdateEvent
+    ) {
+      throw new Error('Task is not most recent task');
+    }
 
     // logs that the files are validated
     // serialize data for PubSub
