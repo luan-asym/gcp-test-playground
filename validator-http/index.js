@@ -77,7 +77,7 @@ exports.validator = async (req, res) => {
     const firestoreLogMessageId = await pubSubClient.topic(FIRESTORE_LOG_TOPIC).publish(dataBuffer);
     console.log(`MessageID: ${firestoreLogMessageId} published!`);
   } catch (err) {
-    console.error(new Error(`Error: ${err.message}`));
+    res.status(400).send(`Error: ${err.message}`);
   }
 
   res.status(200).send(`Successful run!`);
