@@ -20,12 +20,11 @@ exports.validator = async (req, res) => {
   try {
     const message = JSON.parse(Buffer.from(req.body, 'base64').toString('ascii'));
 
-    console.log(`BODY: ${JSON.stringify(message)}`);
+    console.log(`Body: ${JSON.stringify(message)}`);
 
     // extract body info
     const lastUpdateTime = message.lastUpdateTime;
     const lastUpdateFile = message.lastUpdateFile;
-    const lastUpdateEvent = message.lastUpdateEvent;
     const email = message.email;
     const bucketName = message.bucketName;
 
@@ -41,6 +40,7 @@ exports.validator = async (req, res) => {
       throw new Error('bucketName must not be blank');
     }
 
+    // TODO: refactor this to a Promise.all()
     // check firestore entry with form answers
     const answersDocRef = await answersCollection.doc(bucketName).get();
     const answersData = answersDocRef.data();
