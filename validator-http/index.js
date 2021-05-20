@@ -20,7 +20,7 @@ exports.validator = async (req, res) => {
   try {
     const message = JSON.parse(Buffer.from(req.body, 'base64').toString('ascii'));
 
-    console.log(`Body: ${JSON.stringify(message)}`);
+    console.log(`BODY: ${JSON.stringify(message)}`);
 
     // extract body info
     const lastUpdateTime = message.lastUpdateTime;
