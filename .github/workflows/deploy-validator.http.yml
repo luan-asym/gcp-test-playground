@@ -2,8 +2,6 @@ name: Deploy validator
 
 on:
   push:
-    branches:
-      - master
 
 env:
   GITHUB_SHA: ${{ github.sha }}

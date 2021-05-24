@@ -11,27 +11,33 @@ const TOPIC = 'bucket-changed';
  * @param {!express:Response} res HTTP response context.
  */
 exports.bucketRequest = async (psMessage) => {
-  const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
+  try {
+    const message = JSON.parse(Buffer.from(psMessage.data, 'base64').toString());
 
-  console.log(`Message: ${JSON.stringify(message)}`);
+    console.log(`Message: ${JSON.stringify(message)}`);
 
-  // extract pubsub message data
-  const bucketName = message.bucketName;
-  const location = message.location || LOCATION;
-  const storageClass = message.storageClass || STORAGE_CLASS;
+    // extract pubsub message data
+    const bucketName = message.bucketName;
+    const location = message.location || LOCATION;
+    const storageClass = message.storageClass || STORAGE_CLASS;
 
-  const storage = new Storage();
+    // create client
+    const storage = new Storage();
 
-  // creates bucket
-  await storage.createBucket(bucketName, {
-    location: location,
-    storageClass: storageClass,
-  });
-  console.log(`Bucket ${bucketName} created!`);
+    // creates bucket
+    await storage.createBucket(bucketName, {
+      location: location,
+      storageClass: storageClass,
+    });
+    console.log(`Bucket ${bucketName} created!`);
 
-  // creates notification for bucket
-  await storage.bucket(bucketName).createNotification(TOPIC);
-  console.log(`Bucket ${bucketName} registered for ${TOPIC} topic!`);
+    // creates notification for bucket
+    await storage.bucket(bucketName).createNotification(TOPIC);
+    console.log(`Bucket ${bucketName} registered for ${TOPIC} topic!`);
+  } catch (err) {
+    console.error(new Error(`Error: ${err.message}`));
+    res.status(400).send(`Error: ${err.message}`);
+  }
 
   res.status(200).send(`${bucketName} created and setup`);
 };

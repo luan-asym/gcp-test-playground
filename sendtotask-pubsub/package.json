@@ -1,7 +1,0 @@
-{
-  "name": "sendtotask-pubsub",
-  "version": "0.0.1",
-  "dependencies": {
-    "@google-cloud/tasks": "2.3.0"
-  }
-}

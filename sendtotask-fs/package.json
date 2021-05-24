@@ -1,7 +1,8 @@
 {
-  "name": "validator-http",
+  "name": "sendtotask-fs",
   "version": "0.0.1",
   "dependencies": {
+    "@google-cloud/tasks": "2.3.0",
     "@google-cloud/firestore": "4.10.1",
     "@google-cloud/pubsub": "2.10.0"
   }

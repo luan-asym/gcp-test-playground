@@ -2,8 +2,6 @@ name: Deploy sendToTask
 
 on:
   push:
-    branches:
-      - master
 
 env:
   GITHUB_SHA: ${{ github.sha }}
@@ -14,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: sendtotask-pubsub
+        working-directory: sendtotask-fs
 
     steps:
       - uses: actions/checkout@v2
@@ -32,7 +30,8 @@ jobs:
           GCP_SA_EMAIL: ${{ secrets.GCP_SA_EMAIL }}
         run: |
           gcloud functions deploy sendToTask \
-            --trigger-topic task-request \
+            --trigger-event providers/cloud.firestore/eventTypes/document.update \
+            --trigger-resource "projects/$PROJECT_ID/databases/(default)/documents/bucket-answers/{bucketName}" \
             --region=us-east4 \
             --runtime=nodejs12 \
             --memory=128MB \
