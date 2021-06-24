@@ -16,6 +16,7 @@ exports.transferFiles = async (req, res) => {
 
     // check if buckets exist
     let srcBucket, srcBucketExists, destBucket, destBucketExists;
+    let filesProccessed = 0
     try {
       srcBucketExists = await storage.bucket(srcBucketName).exists();
 
@@ -72,6 +73,7 @@ exports.transferFiles = async (req, res) => {
       // copy over file
       await srcBucket.file(file.name).copy(destBucket.file(file.name));
       console.log(`${file.name} copied!`);
+      filesProccessed++;
 
       // if flagged, delete file from srcBucket
       if (deleteSrc) {
@@ -85,5 +87,5 @@ exports.transferFiles = async (req, res) => {
 
   res
     .status(200)
-    .send(`${srcFiles.length} file(s) moved from ${srcBucketName} to ${destBucketName}`);
+    .send(`${filesProccessed} file(s) moved from ${srcBucketName} to ${destBucketName}`);
 };
